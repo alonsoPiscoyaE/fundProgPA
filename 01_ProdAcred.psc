@@ -1,11 +1,15 @@
 
 Funcion MenuPrincipal
+	Definir verifSalirPrograma Como Real
+	// Inicializar bucle de MenuPrincipal
+	verifSalirPrograma = 1
+	
 	Escribir "Bienvenido a blablabla."
-	Escribir "1. GestiÛn de Estudiantes."
-	Escribir "2. GestiÛn de Cursos."
-	Escribir "3. Proceso de matrÌcula."
-	Escribir "4. GestiÛn de Pagos."
-	Escribir "5. Reportes AcadÈmicos."
+	Escribir "1. Gesti√≥n de Estudiantes."
+	Escribir "2. Gesti√≥n de Cursos."
+	Escribir "3. Proceso de matr√≠cula."
+	Escribir "4. Gesti√≥n de Pagos."
+	Escribir "5. Reportes Acad√©micos."
 	Escribir "6. Salir del programa."
 	Leer accionMenuPrincipal
 	Segun accionMenuPrincipal Hacer
@@ -22,9 +26,12 @@ Funcion MenuPrincipal
 		6:
 			verifSalirPrograma = SalirPrograma
 		De Otro Modo:
-			Escribir "No se ingresÛ una opciÛn correcta."
+			Escribir "No se ingres√≥ una opci√≥n correcta."
 	Fin Segun
-	Si verifSalirPrograma = 0 Entonces
+	
+	// Verifica si se rompe el bucle de ejecuci√≥n de MenuPrincipal
+	// (se debe haber elegido la funci√≥n SalirPrograma para esto)
+	Si verifSalirPrograma <> 0 Entonces
 		MenuPrincipal
 	FinSi
 Fin Funcion
@@ -32,77 +39,62 @@ Fin Funcion
 
 
 Funcion GestionEstudiantes
-	//
+	// Contiene las funciones:
+	// 		RegistrarEstudiantes() : agregar informacion de alumnos (dni, nombre, carrera, ciclo)
+	//		ActualizarEstudiantes() : editar informacion ya registrada
+	// 		BuscarEstudiantes() : por ID o nombre, para mostrar informaci√≥n relevante
 FinFuncion
 
 
 
 Funcion GestionCursos
-	//
+	// Contiene las funciones:
+	// 		RegistrarCursos() : agregar cursos (c√≥digo, nombre, cr√©ditos, cupos m√°ximos)
+	// 		ActualizarCursos() : editar informaci√≥n ya registrada
+	// 		MostrarCursos() : mostrar lista de cursos disponibles por carrera o por ciclo
 FinFuncion
 
 
 
 Funcion ProcesoMatricula
-	//
+	// Contiene las funciones:
+	// 		MatricularEstudianteEnCurso() : Agregar estudiante a ciertos cursos acorde a su ciclo y carrera
+	// 		VerificarMatricula() : Verificar prerequisitos y conflictos horarios 
+	// 		GenerarBoletaMatricula() : con costo total
 FinFuncion
 
 
 
 Funcion GestionPagos
-	//
+	// Contiene las funciones:
+	// 		RegistrarPagos() : de matr√≠cula
+	// 		CalcularDscto() : por pronto pago o becas.
 FinFuncion
 
 
 
 Funcion ReportesAcademicos
-	//
+	// Contiene las funciones:
+	//		GenerarReporteEstudiante() : por estudiante, ingresando dni.
+	//		Estad√≠sticasMatr√≠cula(): por curso o por carrera
 FinFuncion
 
 
 
 Funcion retornoSalirPrograma <- SalirPrograma
+	// Retorna un valor usado para detener el bucle de ejecuci√≥n de MenuPrincipal
 	Escribir "Desea salir del programa?"
-	Escribir "1 = SÌ"
-	Escribir "0 = No"
+	Escribir "0 = S√≠"
+	Escribir "(cualquier otro n√∫mero) = No"
 	Leer retornoSalirPrograma
 FinFuncion
 
 
 
-Algoritmo ProdAcred
-	Definir verifSalirPrograma Como Entero
-	verifSalirPrograma = 0
-	// Sistema de gestiÛn de matrÌculas universitarias
-	// Se deben usar las funciones:
-	// 
-	// Funcion MenuPrincipal(): ejecutada al iniciar el programa y al terminar una funciÛn de nivel 1 (FN1),
-	//			Puede indicar en ejecutar una funciÛn de siguiente nivel, o salir del programa.
-	//
-	// 		GestionEstudiantes() : contiene las funciones:
-	// 			RegistrarEstudiantes() : agregar informacion de alumnos (dni, nombre, carrera, ciclo)
-	//			ActualizarEstudiantes() : editar informacion ya registrada
-	// 			BuscarEstudiantes() : por ID o nombre, para mostrar informaciÛn relevante
-	//
-	// 		GestionCursos() : contiene las funciones:
-	// 			RegistrarCursos() : agregar cursos (cÛdigo, nombre, crÈditos, cupos m·ximos)
-	// 			ActualizarCursos() : editar informaciÛn ya registrada
-	// 			MostrarCursos() : mostrar lista de cursos disponibles por carrera o por ciclo
-	//
-	// 		ProcesoMatricula() : contiene las funciones:
-	// 			MatricularEstudianteEnCurso() : Agregar estudiante a ciertos cursos acorde a su ciclo y carrera
-	// 			VerificarMatricula() : Verificar prerequisitos y conflictos horarios 
-	// 			GenerarBoletaMatricula() : con costo total
-	//
-	//		GestiÛnPagos() : contiene las funciones:
-	// 			RegistrarPagos() : de matrÌcula
-	// 			CalcularDscto() : por pronto pago o becas.
-	//
-	// 		ReportesAcademicos() : contiene las funciones:
-	//			GenerarReporteEstudiante() : por estudiante, ingresando dni.
-	//			EstadÌsticasMatrÌcula(): por curso o por carrera
-	//
-	// 		SalirPrograma()
-	
+Algoritmo ProdAcred	
+	// Ejecuci√≥n del men√∫ principal, recursivo hasta que SalirPrograma lo detenga
 	MenuPrincipal
+	
+	// Mensaje de despedida al salir
+	Escribir "Que tenga un buen d√≠a."
 FinAlgoritmo
