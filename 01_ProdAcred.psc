@@ -1,43 +1,4 @@
 
-Funcion MenuPrincipal
-	Definir verifSalirPrograma Como Real
-	// Inicializar bucle de MenuPrincipal
-	verifSalirPrograma = 1
-	
-	Escribir "Bienvenido a blablabla."
-	Escribir "1. Gestión de Estudiantes."
-	Escribir "2. Gestión de Cursos."
-	Escribir "3. Proceso de matrícula."
-	Escribir "4. Gestión de Pagos."
-	Escribir "5. Reportes Académicos."
-	Escribir "6. Salir del programa."
-	Leer accionMenuPrincipal
-	Segun accionMenuPrincipal Hacer
-		1:
-			GestionEstudiantes
-		2:
-			GestionCursos
-		3:
-			ProcesoMatricula
-		4:
-			GestionPagos
-		5:
-			ReportesAcademicos
-		6:
-			verifSalirPrograma = SalirPrograma
-		De Otro Modo:
-			Escribir "No se ingresó una opción correcta."
-	Fin Segun
-	
-	// Verifica si se rompe el bucle de ejecución de MenuPrincipal
-	// (se debe haber elegido la función SalirPrograma para esto)
-	Si verifSalirPrograma <> 0 Entonces
-		MenuPrincipal
-	FinSi
-Fin Funcion
-
-
-
 Funcion GestionEstudiantes
 	// Contiene las funciones:
 	// 		RegistrarEstudiantes() : agregar informacion de alumnos (dni, nombre, carrera, ciclo)
@@ -92,8 +53,55 @@ FinFuncion
 
 
 Algoritmo ProdAcred	
-	// Ejecución del menú principal, recursivo hasta que SalirPrograma lo detenga
-	MenuPrincipal
+	
+	Definir arr Como Caracter
+	Dimension arr[5,7,8,9]
+	// Variable para salir del programa
+	Definir verifSalirPrograma Como Real
+	verifSalirPrograma <- 1
+	
+	// MENU PRINCIPAL, recursivo hasta que verifSalirPrograma lo detenga
+	Repetir
+		Escribir "Bienvenido a blablabla."
+		Escribir "1. Gestión de Estudiantes."
+		Escribir "2. Gestión de Cursos."
+		Escribir "3. Proceso de matrícula."
+		Escribir "4. Gestión de Pagos."
+		Escribir "5. Reportes Académicos."
+		Escribir "6. Salir del programa."
+		Leer accionMenuPrincipal
+		Segun accionMenuPrincipal Hacer
+			1:
+				// Gestión de Estudiantes
+				GestionEstudiantes
+				
+			2:
+				// Gestión de Cursos
+				GestionCursos
+				
+			3:
+				// Procesos de matrícula
+				ProcesoMatricula
+				
+			4:
+				// Gestión de Pagos
+				GestionPagos
+				
+			5:
+				// Reportes Académicos
+				ReportesAcademicos
+				
+			6:
+				// Diálogo para salir del programa
+				Escribir "Desea salir del programa?"
+				Escribir "0 = Sí"
+				Escribir "(cualquier otro número) = No"
+				Leer verifSalirPrograma
+				
+			De Otro Modo:
+				Escribir "No se ingresó una opción correcta."
+		Fin Segun
+	Hasta Que verifSalirPrograma=0
 	
 	// Mensaje de despedida al salir
 	Escribir "Que tenga un buen día."
