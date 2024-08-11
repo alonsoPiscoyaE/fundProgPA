@@ -53,7 +53,7 @@ Algoritmo ProdAcred
 	//     BASES DE DATOS DE ESTUDIANTES
 	// El ID interno de cada estudiante será su posición en la 1ra dimensión 
 	// del arreglo, asignado de acuerdo al orden en que es agregado.
-	// El ID interno será usado para las operaciones del programa
+	// El ID interno será usado para las operaciones del programa.
 	Definir datosEstudiantesCaracter Como Caracter
 	Definir datosEstudiantesHorario Como Logico
 	Dimension datosEstudiantesCaracter[cantidadEstudiantes,4]
@@ -88,7 +88,7 @@ Algoritmo ProdAcred
 	//     BASE DE DATOS DE CURSOS
 	// El ID interno de cada curso será su posición en la 1ra dimensión
 	// del arreglo, asignado de acuerdo al orden en que es agregado.
-	// El ID interno será usado para las operaciones del programa
+	// El ID interno será usado para las operaciones del programa.
 	Definir datosCursosCaracter Como Caracter
 	Definir datosCursosEntero Como Entero
 	Dimension datosCursosCaracter[cantidadCursos,2]
@@ -97,12 +97,23 @@ Algoritmo ProdAcred
 	// Los 3 espacios corresponden a CRÉDITOS, CUPOS ACTUALES, CUPOS MÁXIMOS
 	
 	
+	//     REGISTRO DE CURSOS POR ESTUDIANTE	
+	Definir datosEstudiantesCursos Como Logico
+	Dimension datosEstudiantesCursos[cantidadEstudiantes,cantidadCursos]
+	// Arreglo de booleanos lógicos (0 o 1) donde:
+	// 0 = No lleva el curso
+	// 1 = Sí lleva el curso
+	// La 1ra dimensión es el ID interno del estudiante
+	// La 2da dimensión es el ID interno del curso
+	
+	
 	// Variable para salir del programa
 	Definir verifSalirPrograma Como Real
 	verifSalirPrograma <- 1
 	
 	
 	// MENU PRINCIPAL, recursivo hasta que verifSalirPrograma lo detenga
+	Definir accionMenuPrincipal Como Real
 	Repetir
 		Escribir "Bienvenido a blablabla."
 		Escribir "1. Gestión de Estudiantes."
