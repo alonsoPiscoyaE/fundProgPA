@@ -3,7 +3,7 @@ Funcion GestionEstudiantes
 	// Contiene las funciones:
 	// 		RegistrarEstudiantes() : agregar informacion de alumnos (dni, nombre, carrera, ciclo)
 	//		ActualizarEstudiantes() : editar informacion ya registrada
-	// 		BuscarEstudiantes() : por ID o nombre, para mostrar información relevante
+	// 		BuscarEstudiantes() : por DNI o nombre, para mostrar información relevante
 FinFuncion
 
 
@@ -42,23 +42,65 @@ FinFuncion
 
 
 
-Funcion retornoSalirPrograma <- SalirPrograma
-	// Retorna un valor usado para detener el bucle de ejecución de MenuPrincipal
-	Escribir "Desea salir del programa?"
-	Escribir "0 = Sí"
-	Escribir "(cualquier otro número) = No"
-	Leer retornoSalirPrograma
-FinFuncion
-
-
-
-Algoritmo ProdAcred	
+Algoritmo ProdAcred
 	
-	Definir arr Como Caracter
-	Dimension arr[5,7,8,9]
+	//     DEFINICIONES BASE
+	Definir cantidadEstudiantes, cantidadCursos Como Entero
+	cantidadEstudiantes <- 1
+	cantidadCursos <- 1
+	
+	
+	//     BASES DE DATOS DE ESTUDIANTES
+	// El ID interno de cada estudiante será su posición en la 1ra dimensión 
+	// del arreglo, asignado de acuerdo al orden en que es agregado.
+	// El ID interno será usado para las operaciones del programa
+	Definir datosEstudiantesCaracter Como Caracter
+	Definir datosEstudiantesHorario Como Logico
+	Dimension datosEstudiantesCaracter[cantidadEstudiantes,4]
+	// Los 4 espacios corresponden a DNI, NOMBRE, CARRERA, CICLO
+	Dimension datosEstudiantesHorario[cantidadEstudiantes,6,18]
+	// Arreglo de booleanos lógicos (0 o 1) donde:
+	// 0 = Espacio vacío sin clases
+	// 1 = Espacio lleno con clases
+	// La 2da dimensión es el Día de la semana (1-6)
+	// La 3ra dimensión es el Bloque horario (1-18)
+	//   °ID interno    Lun  Mar  Mie  Jue  Vie  Sab
+	//   7:30 - 8:20     1    2    3    4    5    6
+	//   8:20 - 9:10     2
+	//   9:10 - 10:00    3
+	//  10:00 - 10:50    4
+	//  10:50 - 11:40    5
+	//  11:40 - 12:30    6
+	//  12:30 - 13:20    7
+	//  13:20 - 14:10    8
+	//  14:10 - 15:00    9
+	//  15:00 - 15:50   10
+	//  15:50 - 16:40   11
+	//  16:40 - 17:30   12
+	//  17:30 - 18:20   13
+	//  18:20 - 19:10   14
+	//  19:10 - 20:00   15
+	//  20:00 - 20:50   16
+	//  20:50 - 21:40   17
+	//  21:40 - 22:30   18
+	
+	
+	//     BASE DE DATOS DE CURSOS
+	// El ID interno de cada curso será su posición en la 1ra dimensión
+	// del arreglo, asignado de acuerdo al orden en que es agregado.
+	// El ID interno será usado para las operaciones del programa
+	Definir datosCursosCaracter Como Caracter
+	Definir datosCursosEntero Como Entero
+	Dimension datosCursosCaracter[cantidadCursos,2]
+	// Los 2 espacios corresponden a CODIGO (ABCD-1001), NOMBRE
+	Dimension datosCursosEntero[cantidadCursos,3]
+	// Los 3 espacios corresponden a CRÉDITOS, CUPOS ACTUALES, CUPOS MÁXIMOS
+	
+	
 	// Variable para salir del programa
 	Definir verifSalirPrograma Como Real
 	verifSalirPrograma <- 1
+	
 	
 	// MENU PRINCIPAL, recursivo hasta que verifSalirPrograma lo detenga
 	Repetir
@@ -102,6 +144,7 @@ Algoritmo ProdAcred
 				Escribir "No se ingresó una opción correcta."
 		Fin Segun
 	Hasta Que verifSalirPrograma=0
+	
 	
 	// Mensaje de despedida al salir
 	Escribir "Que tenga un buen día."
