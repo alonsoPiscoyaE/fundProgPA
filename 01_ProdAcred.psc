@@ -47,7 +47,7 @@ Algoritmo ProdAcred
 	//     DEFINICIONES BASE
 	Definir cantidadEstudiantes, cantidadCursos Como Entero
 	cantidadEstudiantes <- 1
-	cantidadCursos <- 1
+	cantidadCarreras <- 1
 	
 	
 	//     BASES DE DATOS DE ESTUDIANTES
@@ -85,21 +85,30 @@ Algoritmo ProdAcred
 	//  21:40 - 22:30   18
 	
 	
+	//     BASE DE DATOS DE CARRERA
+	// El ID interno de cada carrera será su posición en la 1ra dimensión
+	Definir nombreCarrera Como Caracter
+	Dimension nombreCarrera[cantidadCarreras]
+	// El espacio corresponde a NOMBRE.
+	
+	
 	//     BASE DE DATOS DE CURSOS
 	// El ID interno de cada curso será su posición en la 1ra dimensión
 	// del arreglo, asignado de acuerdo al orden en que es agregado.
 	// El ID interno será usado para las operaciones del programa.
+	// Cada ciclo (2da dimensión) admite hasta 10 cursos (3ra dimensión).
+	// Cada carrera (1ra dimensión) tiene 10 ciclos.
 	Definir datosCursosCaracter Como Caracter
 	Definir datosCursosEntero Como Entero
-	Dimension datosCursosCaracter[cantidadCursos,2]
-	// Los 2 espacios corresponden a CODIGO (ABCD-1001), NOMBRE
-	Dimension datosCursosEntero[cantidadCursos,3]
+	Dimension datosCursosCaracter[cantidadCarreras,10,10,3]
+	// Los 2 espacios corresponden a CODIGO (ABCD-1001), NOMBRE, CÓDIGO PREREQUISITO
+	Dimension datosCursosEntero[cantidadCarreras,10,10,3]
 	// Los 3 espacios corresponden a CRÉDITOS, CUPOS ACTUALES, CUPOS MÁXIMOS
 	
 	
 	//     REGISTRO DE CURSOS POR ESTUDIANTE	
 	Definir datosEstudiantesCursos Como Logico
-	Dimension datosEstudiantesCursos[cantidadEstudiantes,cantidadCursos]
+	Dimension datosEstudiantesCursos[cantidadEstudiantes,10,10]
 	// Arreglo de booleanos lógicos (0 o 1) donde:
 	// 0 = No lleva el curso
 	// 1 = Sí lleva el curso
@@ -110,6 +119,9 @@ Algoritmo ProdAcred
 	// Variable para salir del programa
 	Definir verifSalirPrograma Como Real
 	verifSalirPrograma <- 1
+	
+	
+	//     Definición de datos iniciales
 	
 	
 	// MENU PRINCIPAL, recursivo hasta que verifSalirPrograma lo detenga
