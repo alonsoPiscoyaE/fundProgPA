@@ -10,13 +10,6 @@ Funcion valorVerificado <- IngresarEnteroValido(limInf,limSup)
 	valorVerificado <- valorIngresado
 FinFuncion
 
-Funcion GestionEstudiantes
-	// Contiene las funciones:
-	// 		RegistrarEstudiantes() : agregar informacion de alumnos (dni, nombre, carrera, ciclo)
-	//		ActualizarEstudiantes() : editar informacion ya registrada
-	// 		BuscarEstudiantes() : por DNI o nombre, para mostrar información relevante
-FinFuncion
-
 
 
 Funcion GestionCursos
@@ -193,7 +186,8 @@ Algoritmo ProdAcred
 	
 	//     VARIABLES AUXILIARES
 	// GESTION ESTUDIANTES
-	Definir idNuevoEstudiante Como Entero
+	Definir codigoEstudianteBuscar Como Caracter
+	Definir IdEstudianteBuscar Como Entero
 	
 	
 	// MENU PRINCIPAL, recursivo hasta que verifSalirPrograma lo detenga
@@ -209,26 +203,25 @@ Algoritmo ProdAcred
 		Leer accionMenu
 		Segun accionMenu Hacer
 			1:
-				
 				// GESTION DE ESTUDIANTES
 				Escribir "=== GESTIÓN DE ESTUDIANTES"
 				Escribir "1. Mostrar lista de estudiantes."
 				Escribir "2. Registrar un nuevo estudiante."
-				Escribir "3. Actualizar información de estudiante."
-				Escribir "4. Buscar estudiante por nombre o código."
-				Escribir "5. Regresar al menú principal."
+				Escribir "3. Buscar estudiante y/o actualizar información."
+				Escribir "4. Regresar al menú principal."
 				Leer accionMenu
 				Segun accionMenu Hacer
 					1:
-						// Mostrar lista de estudiantes
+						// MOSTRAR LISTA DE ESTUDIANTES
 						Escribir "== LISTA DE ESTUDIANTES:"
 						Para i<-1 Hasta cantidadEstudiantes Hacer
 							Escribir i,". ", datosEstudiantesCaracter[i,2]
-							Escribir "    Código ",datosEstudiantesCaracter[i,1],", ",nombreCarrera[datosEstudiantesEntero[i,1]],", ciclo ",datosEstudiantesEntero[i,2]
+							Escribir "    Código ",datosEstudiantesCaracter[i,1],", " Sin Saltar
+							Escribir nombreCarrera[datosEstudiantesEntero[i,1]],", ciclo ",datosEstudiantesEntero[i,2]
 							Escribir ""
 						FinPara
 					2:
-						// Registrar nuevo estudiante
+						// REGISTRAR NUEVO ESTUDIANTE
 						cantidadEstudiantes <- cantidadEstudiantes +1
 						// Redimensionar todos los arreglos que dependan de la cantidad de estudiantes
 						Redimension datosEstudiantesCaracter[cantidadEstudiantes,2]
@@ -251,16 +244,65 @@ Algoritmo ProdAcred
 						// Confirmar registro de estudiante
 						Escribir "Estudiante registrado correctamente."
 					3:
-						// editar estudiante
+						// BUSCAR Y/O ACTUALIZAR INFORMACIÓN DE ESTUDIANTE
+						Escribir "Ingrese el código exacto (de la forma 256789A) del estudiante a buscar:"
+						IdEstudianteBuscar <- 0
+						Leer codigoEstudianteBuscar
+						Para i<-1 Hasta cantidadEstudiantes Hacer
+							Si datosEstudiantesCaracter[i,1] = codigoEstudianteBuscar Entonces
+								IdEstudianteBuscar <- i
+							FinSi
+						FinPara
+						Si IdEstudianteBuscar = 0 Entonces
+							Escribir "No se encontró un estudiante con ese código exacto."
+						SiNo
+							Escribir "Se encontró al estudiante:"
+							Escribir IdEstudianteBuscar,". ", datosEstudiantesCaracter[IdEstudianteBuscar,2]
+							Escribir "    Código ",datosEstudiantesCaracter[IdEstudianteBuscar,1],", " Sin Saltar
+							Escribir nombreCarrera[datosEstudiantesEntero[IdEstudianteBuscar,1]],", ciclo ",datosEstudiantesEntero[IdEstudianteBuscar,2]
+							// Proceder a la actualización de un valor
+							Escribir "Elija la opción a actualizar:"
+							Escribir "1. Código"
+							Escribir "2. Apellidos y nombres"
+							Escribir "3. Carrera"
+							Escribir "4. Ciclo"
+							Escribir "5. No actualizar nada."
+							Leer accionMenu
+							Segun accionMenu Hacer
+								1:
+									// Actualizar código
+									Escribir "Ingrese el código actualizado del estudiante:"
+									Leer datosEstudiantesCaracter[IdEstudianteBuscar,1]
+								2:
+									// Actualizar nombre
+									Escribir "Ingrese los apellidos y nombres (en ese orden, en mayúsculas) actualizados del estudiante:"
+									Leer datosEstudiantesCaracter[IdEstudianteBuscar,2]
+								3:
+									// Actualizar carrera
+									Escribir "Elija la carrera actualizada del estudiante:"
+									Para j<-1 Hasta cantidadCarreras Hacer
+										Escribir j,". ",nombreCarrera[j]
+									FinPara
+									datosEstudiantesEntero[IdEstudianteBuscar,1] <- IngresarEnteroValido(1,3)
+								4:
+									// Actualizar ciclo
+									Escribir "Ingrese el ciclo actualizado, del 1 al 10."
+									datosEstudiantesEntero[IdEstudianteBuscar,2] <- IngresarEnteroValido(1,10)
+								5:
+									// No hacer nada
+								De Otro Modo:
+									Escribir "No se ingresó una opción correcta."
+							FinSegun
+						FinSi
 					4:
-						// buscar estudiante
-					5:
-						// no hace nada
+						// No hace nada
 					De Otro Modo:
 						Escribir "No se ingresó una opción correcta."
 				FinSegun
+				
+				
 			2:
-				// Gestión de Cursos
+				// GESTIÓN DE CURSOS
 				GestionCursos
 				
 			3:
