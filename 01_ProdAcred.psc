@@ -58,7 +58,7 @@ Algoritmo ProdAcred
 	cantidadCarreras <- 3
 	
 	
-	//     BASES DE DATOS DE ESTUDIANTES
+	//     "BASES DE DATOS" DE ESTUDIANTES
 	// El ID interno de cada estudiante será su posición en la 1ra dimensión 
 	// del arreglo, asignado de acuerdo al orden en que es agregado.
 	// El ID interno será usado para las operaciones del programa.
@@ -96,13 +96,13 @@ Algoritmo ProdAcred
 	//  21:40 - 22:30   18
 	
 	
-	//     BASE DE DATOS DE CARRERA
+	//     "BASE DE DATOS" DE CARRERA
 	// El ID interno de cada carrera será su posición en la 1ra dimensión
 	Definir nombreCarrera Como Caracter
 	Dimension nombreCarrera[cantidadCarreras]
 	
 	
-	//     BASE DE DATOS DE CURSOS
+	//     "BASE DE DATOS" DE CURSOS
 	// El ID interno de cada curso será su posición en la 1ra dimensión
 	// del arreglo, asignado de acuerdo al orden en que es agregado.
 	// El ID interno será usado para las operaciones del programa.
@@ -126,74 +126,93 @@ Algoritmo ProdAcred
 	// La 2da dimensión es el ID interno del curso
 	
 	
-	// Variable para salir del programa
-	Definir verifSalirPrograma Como Real
-	verifSalirPrograma <- 1
-	
-	
 	//     INICIALIZACIÓN DE INFORMACIÓN PREDEFINIDA
 	nombreCarrera[1] <- "Ingeniería Civil"       // ID interno: 1
 	nombreCarrera[2] <- "Ingeniería de Sistemas" // ID interno: 2
 	nombreCarrera[3] <- "Arquitectura"           // ID interno: 3
 	
-	// Estudiante ID interno 1
+	// ESTUDIANTES (ID 1 a 9)
 	datosEstudiantesCaracter[1,1] <- "231639H"  // Codigo
 	datosEstudiantesCaracter[1,2] <- "PISCOYA ENCAJIMA JOSE ALONSO"
 	datosEstudiantesEntero[1,1] <- 2  // Sistemas
 	datosEstudiantesEntero[1,2] <- 9  // Ciclo
-	// Estudiante ID interno 2
 	datosEstudiantesCaracter[2,1] <- "231645H"  // Codigo
 	datosEstudiantesCaracter[2,2] <- "VILLEGAS CUENCA JOSE MANUEL"
 	datosEstudiantesEntero[2,1] <- 2  // Sistemas
 	datosEstudiantesEntero[2,2] <- 8  // Ciclo
-	// Estudiante ID interno 3
 	datosEstudiantesCaracter[3,1] <- "231625G"  // Codigo
 	datosEstudiantesCaracter[3,2] <- "CAUCHOS LABAN NELSON ANIBAL"
 	datosEstudiantesEntero[3,1] <- 2  // Sistemas
 	datosEstudiantesEntero[3,2] <- 7  // Ciclo
-	
-	// Estudiante ID interno 4
 	datosEstudiantesCaracter[4,1] <- "231624K"  // Codigo
 	datosEstudiantesCaracter[4,2] <- "CASTRO MENDOZA JHORDY FABRICIO"
 	datosEstudiantesEntero[4,1] <- 1  // Civil
 	datosEstudiantesEntero[4,2] <- 6  // Ciclo
-	// Estudiante ID interno 5
 	datosEstudiantesCaracter[5,1] <- "231620E"  // Codigo
 	datosEstudiantesCaracter[5,2] <- "BARRERA ALVARADO HENRY CRISTIAN"
 	datosEstudiantesEntero[5,1] <- 1  // Civil
 	datosEstudiantesEntero[5,2] <- 4  // Ciclo
-	// Estudiante ID interno 6
 	datosEstudiantesCaracter[6,1] <- "231640F"  // Codigo
 	datosEstudiantesCaracter[6,2] <- "QUISPE CABEZAS JUAN DE DIOS"
 	datosEstudiantesEntero[6,1] <- 1  // Civil
 	datosEstudiantesEntero[6,2] <- 2  // Ciclo
-	
-	// Estudiante ID interno 7
 	datosEstudiantesCaracter[7,1] <- "231638A"  // Codigo
 	datosEstudiantesCaracter[7,2] <- "PAREDES AGUINAGA JOSUE SAMUEL"
 	datosEstudiantesEntero[7,1] <- 3  // Arquitectura
 	datosEstudiantesEntero[7,2] <- 5  // Ciclo
-	// Estudiante ID interno 8
 	datosEstudiantesCaracter[8,1] <- "231631G"  // Codigo
 	datosEstudiantesCaracter[8,2] <- "LOZANO PAZ ABIMA GALILEY"
 	datosEstudiantesEntero[8,1] <- 3  // Arquitectura
 	datosEstudiantesEntero[8,2] <- 3  // Ciclo
-	// Estudiante ID interno 9
 	datosEstudiantesCaracter[9,1] <- "231636I"  // Codigo
 	datosEstudiantesCaracter[9,2] <- "NUÑEZ RUBIO MAICOL JHORDY"
 	datosEstudiantesEntero[9,1] <- 3  // Arquitectura
 	datosEstudiantesEntero[9,2] <- 1  // Ciclo
 	
+	// CARRERAS ING. CIVIL
+	// Ciclo 1
+	datosCursosCaracter[1,1,1,1] <- "MATG1001" // Código de curso 1
+	datosCursosCaracter[1,1,1,2] <- "Fundamentos matemáticos"
+	datosCursosCaracter[1,1,1,3] <- "0"    // Sin prerrequisito
+	datosCursosEntero[1,1,1,1] <- 4    // Créditos
+	datosCursosEntero[1,1,1,2] <- 0    // Cupos actuales
+	datosCursosEntero[1,1,1,3] <- 35    // Cupos máximos
+	datosCursosCaracter[1,1,2,1] <- "MATG1002" // Código de curso 2
+	datosCursosCaracter[1,1,2,2] <- "Geometría descriptiva"
+	datosCursosCaracter[1,1,2,3] <- "0"    // Sin prerrequisito
+	datosCursosEntero[1,1,2,1] <- 3    // Créditos
+	datosCursosEntero[1,1,2,2] <- 0    // Cupos actuales
+	datosCursosEntero[1,1,2,3] <- 40    // Cupos máximos
+	// Ciclo 2
+	datosCursosCaracter[1,2,1,1] <- "CALC1011" // Código de curso 1
+	datosCursosCaracter[1,2,1,2] <- "Cálculo diferencial"
+	datosCursosCaracter[1,2,1,3] <- "MATG1001" // Prerrequisito
+	datosCursosEntero[1,2,1,1] <- 5    // Créditos
+	datosCursosEntero[1,2,1,2] <- 0    // Cupos actuales
+	datosCursosEntero[1,2,1,3] <- 30    // Cupos máximos
+	datosCursosCaracter[1,2,2,1] <- "ALIN1101" // Código de curso 2
+	datosCursosCaracter[1,2,2,2] <- "Álgebra Lineal 1"
+	datosCursosCaracter[1,2,2,3] <- "MATG1002" // Prerrequisito
+	datosCursosEntero[1,2,2,1] <- 4    // Créditos
+	datosCursosEntero[1,2,2,2] <- 0    // Cupos actuales
+	datosCursosEntero[1,2,2,3] <- 30    // Cupos máximos
+	
+	
 	//     VARIABLES AUXILIARES
 	// GESTION ESTUDIANTES
 	Definir codigoEstudianteBuscar Como Caracter
 	Definir IdEstudianteBuscar Como Entero
+	// SALIR DEL PROGRAMA
+	Definir verifSalirPrograma Como Real
+	verifSalirPrograma <- 1
 	
 	
 	// MENU PRINCIPAL, recursivo hasta que verifSalirPrograma lo detenga
 	Definir accionMenu Como Real
 	Repetir
-		Escribir "Bienvenido a blablabla."
+		Escribir "================================================"
+		Escribir " BIENVENIDO AL SISTEMA DE GESTIÓN DE MATRÍCULA. "
+		Escribir "================================================"
 		Escribir "1. Gestión de Estudiantes."
 		Escribir "2. Gestión de Cursos."
 		Escribir "3. Proceso de matrícula."
@@ -204,16 +223,16 @@ Algoritmo ProdAcred
 		Segun accionMenu Hacer
 			1:
 				// GESTION DE ESTUDIANTES
-				Escribir "=== GESTIÓN DE ESTUDIANTES"
+				Escribir "=== GESTIÓN DE ESTUDIANTES ==="
 				Escribir "1. Mostrar lista de estudiantes."
 				Escribir "2. Registrar un nuevo estudiante."
 				Escribir "3. Buscar estudiante y/o actualizar información."
-				Escribir "4. Regresar al menú principal."
+				Escribir "(otro número). Regresar al menú principal."
 				Leer accionMenu
 				Segun accionMenu Hacer
 					1:
 						// MOSTRAR LISTA DE ESTUDIANTES
-						Escribir "== LISTA DE ESTUDIANTES:"
+						Escribir "== LISTA DE ESTUDIANTES =="
 						Para i<-1 Hasta cantidadEstudiantes Hacer
 							Escribir i,". ", datosEstudiantesCaracter[i,2]
 							Escribir "    Código ",datosEstudiantesCaracter[i,1],", " Sin Saltar
@@ -266,7 +285,7 @@ Algoritmo ProdAcred
 							Escribir "2. Apellidos y nombres"
 							Escribir "3. Carrera"
 							Escribir "4. Ciclo"
-							Escribir "5. No actualizar nada."
+							Escribir "(otro número). No actualizar nada."
 							Leer accionMenu
 							Segun accionMenu Hacer
 								1:
@@ -288,40 +307,41 @@ Algoritmo ProdAcred
 									// Actualizar ciclo
 									Escribir "Ingrese el ciclo actualizado, del 1 al 10."
 									datosEstudiantesEntero[IdEstudianteBuscar,2] <- IngresarEnteroValido(1,10)
-								5:
-									// No hacer nada
 								De Otro Modo:
-									Escribir "No se ingresó una opción correcta."
+									// Volver al menú principal
 							FinSegun
 						FinSi
-					4:
-						// No hace nada
 					De Otro Modo:
-						Escribir "No se ingresó una opción correcta."
+						// Volver al menú principal
 				FinSegun
 				
 				
 			2:
 				// GESTIÓN DE CURSOS
+				Escribir "=== GESTIÓN DE CURSOS ==="
 				GestionCursos
 				
 			3:
 				// Procesos de matrícula
+				Escribir "=== MATRÍCULA ==="
 				ProcesoMatricula
 				
 			4:
 				// Gestión de Pagos
+				Escribir "=== PAGOS ==="
 				GestionPagos
 				
 			5:
 				// Reportes Académicos
+				Escribir "=== REPORTES ACADÉMICOS ==="
 				ReportesAcademicos
 				
 			6:
 				// Diálogo para salir del programa
+				Escribir "=== SALIR DEL PROGRAMA ==="
 				Escribir "Desea salir del programa?"
-				Escribir "0 = Sí"
-				Escribir "(cualquier otro número) = No"
+				Escribir "0. Sí"
+				Escribir "(otro número). No"
 				Leer verifSalirPrograma
 				
 			De Otro Modo:
@@ -331,5 +351,6 @@ Algoritmo ProdAcred
 	
 	
 	// Mensaje de despedida al salir
+	Escribir "======================"
 	Escribir "Que tenga un buen día."
 FinAlgoritmo
