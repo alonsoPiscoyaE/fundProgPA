@@ -54,7 +54,7 @@ Algoritmo ProdAcred
 	//     DEFINICIONES BASE
 	Definir cantidadEstudiantes, cantidadCursos, cantidadCarreras Como Entero
 	cantidadEstudiantes <- 9
-	cantidadCursos <- 1
+	cantidadCursos <- 4
 	cantidadCarreras <- 3
 	
 	
@@ -185,7 +185,7 @@ Algoritmo ProdAcred
 	datosCursosEntero[1,1,2,3] <- 40    // Cupos máximos
 	// Ciclo 2
 	datosCursosCaracter[1,2,1,1] <- "CALC1011" // Código de curso 1
-	datosCursosCaracter[1,2,1,2] <- "Cálculo diferencial"
+	datosCursosCaracter[1,2,1,2] <- "Cálculo Diferencial"
 	datosCursosCaracter[1,2,1,3] <- "MATG1001" // Prerrequisito
 	datosCursosEntero[1,2,1,1] <- 5    // Créditos
 	datosCursosEntero[1,2,1,2] <- 0    // Cupos actuales
@@ -196,6 +196,32 @@ Algoritmo ProdAcred
 	datosCursosEntero[1,2,2,1] <- 4    // Créditos
 	datosCursosEntero[1,2,2,2] <- 0    // Cupos actuales
 	datosCursosEntero[1,2,2,3] <- 30    // Cupos máximos
+	// Ciclo 3
+	datosCursosCaracter[1,3,1,1] <- "CALC1012" // Código de curso 1
+	datosCursosCaracter[1,3,1,2] <- "Cálculo Integral"
+	datosCursosCaracter[1,3,1,3] <- "CALC1011"    // Sin prerrequisito
+	datosCursosEntero[1,3,1,1] <- 4    // Créditos
+	datosCursosEntero[1,3,1,2] <- 0    // Cupos actuales
+	datosCursosEntero[1,3,1,3] <- 30    // Cupos máximos
+	datosCursosCaracter[1,3,2,1] <- "ALIN1102" // Código de curso 2
+	datosCursosCaracter[1,3,2,2] <- "Álgebra Lineal 2"
+	datosCursosCaracter[1,3,2,3] <- "ALIN1101"    // Sin prerrequisito
+	datosCursosEntero[1,3,2,1] <- 3    // Créditos
+	datosCursosEntero[1,3,2,2] <- 0    // Cupos actuales
+	datosCursosEntero[1,3,2,3] <- 25    // Cupos máximos
+	// Ciclo 4
+	datosCursosCaracter[1,4,1,1] <- "MATE4011" // Código de curso 1
+	datosCursosCaracter[1,4,1,2] <- "Análisis Real Avanzado"
+	datosCursosCaracter[1,4,1,3] <- "CALC1012" // Prerrequisito
+	datosCursosEntero[1,4,1,1] <- 5    // Créditos
+	datosCursosEntero[1,4,1,2] <- 0    // Cupos actuales
+	datosCursosEntero[1,4,1,3] <- 28    // Cupos máximos
+	datosCursosCaracter[1,4,2,1] <- "CIVI4001" // Código de curso 2
+	datosCursosCaracter[1,4,2,2] <- "Introducción a la planificación de construcciones"
+	datosCursosCaracter[1,4,2,3] <- "ALIN1102" // Prerrequisito
+	datosCursosEntero[1,4,2,1] <- 4    // Créditos
+	datosCursosEntero[1,4,2,2] <- 0    // Cupos actuales
+	datosCursosEntero[1,4,2,3] <- 20    // Cupos máximos
 	
 	
 	//     VARIABLES AUXILIARES
