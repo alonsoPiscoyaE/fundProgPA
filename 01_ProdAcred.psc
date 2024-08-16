@@ -199,13 +199,13 @@ Algoritmo ProdAcred
 	// Ciclo 3
 	datosCursosCaracter[1,3,1,1] <- "CALC1012" // Código de curso 1
 	datosCursosCaracter[1,3,1,2] <- "Cálculo Integral"
-	datosCursosCaracter[1,3,1,3] <- "CALC1011"    // Sin prerrequisito
+	datosCursosCaracter[1,3,1,3] <- "CALC1011"    // Prerrequisito
 	datosCursosEntero[1,3,1,1] <- 4    // Créditos
 	datosCursosEntero[1,3,1,2] <- 0    // Cupos actuales
 	datosCursosEntero[1,3,1,3] <- 30    // Cupos máximos
 	datosCursosCaracter[1,3,2,1] <- "ALIN1102" // Código de curso 2
 	datosCursosCaracter[1,3,2,2] <- "Álgebra Lineal 2"
-	datosCursosCaracter[1,3,2,3] <- "ALIN1101"    // Sin prerrequisito
+	datosCursosCaracter[1,3,2,3] <- "ALIN1101"    // Prerrequisito
 	datosCursosEntero[1,3,2,1] <- 3    // Créditos
 	datosCursosEntero[1,3,2,2] <- 0    // Cupos actuales
 	datosCursosEntero[1,3,2,3] <- 25    // Cupos máximos
@@ -227,7 +227,10 @@ Algoritmo ProdAcred
 	//     VARIABLES AUXILIARES
 	// GESTION ESTUDIANTES
 	Definir codigoEstudianteBuscar Como Caracter
-	Definir IdEstudianteBuscar Como Entero
+	Definir idEstudianteBuscar Como Entero
+	// GESTION CURSOS
+	Definir cursoCodigoBuscar Como Caracter
+	Definir cursoCarreraSeleccionado, cursoCicloSeleccionado, idCursoNuevo Como Entero
 	// SALIR DEL PROGRAMA
 	Definir verifSalirPrograma Como Real
 	verifSalirPrograma <- 1
@@ -282,7 +285,7 @@ Algoritmo ProdAcred
 						Para i<-1 Hasta cantidadCarreras Hacer
 							Escribir i,". ",nombreCarrera[i]
 						FinPara
-						datosEstudiantesEntero[cantidadEstudiantes,1] <- IngresarEnteroValido(1,3)
+						datosEstudiantesEntero[cantidadEstudiantes,1] <- IngresarEnteroValido(1,cantidadCarreras)
 						Escribir "Ingrese el ciclo en que se encuentra, del 1 al 10."
 						datosEstudiantesEntero[cantidadEstudiantes,2] <- IngresarEnteroValido(1,10)
 						
@@ -291,20 +294,20 @@ Algoritmo ProdAcred
 					3:
 						// BUSCAR Y/O ACTUALIZAR INFORMACIÓN DE ESTUDIANTE
 						Escribir "Ingrese el código exacto (de la forma 256789A) del estudiante a buscar:"
-						IdEstudianteBuscar <- 0
+						idEstudianteBuscar <- 0
 						Leer codigoEstudianteBuscar
 						Para i<-1 Hasta cantidadEstudiantes Hacer
 							Si datosEstudiantesCaracter[i,1] = codigoEstudianteBuscar Entonces
-								IdEstudianteBuscar <- i
+								idEstudianteBuscar <- i
 							FinSi
 						FinPara
-						Si IdEstudianteBuscar = 0 Entonces
+						Si idEstudianteBuscar = 0 Entonces
 							Escribir "No se encontró un estudiante con ese código exacto."
 						SiNo
 							Escribir "Se encontró al estudiante:"
-							Escribir IdEstudianteBuscar,". ", datosEstudiantesCaracter[IdEstudianteBuscar,2]
-							Escribir "    Código ",datosEstudiantesCaracter[IdEstudianteBuscar,1],", " Sin Saltar
-							Escribir nombreCarrera[datosEstudiantesEntero[IdEstudianteBuscar,1]],", ciclo ",datosEstudiantesEntero[IdEstudianteBuscar,2]
+							Escribir idEstudianteBuscar,". ", datosEstudiantesCaracter[idEstudianteBuscar,2]
+							Escribir "    Código ",datosEstudiantesCaracter[idEstudianteBuscar,1],", " Sin Saltar
+							Escribir nombreCarrera[datosEstudiantesEntero[idEstudianteBuscar,1]],", ciclo ",datosEstudiantesEntero[idEstudianteBuscar,2]
 							// Proceder a la actualización de un valor
 							Escribir "Elija la opción a actualizar:"
 							Escribir "1. Código"
@@ -317,22 +320,22 @@ Algoritmo ProdAcred
 								1:
 									// Actualizar código
 									Escribir "Ingrese el código actualizado del estudiante:"
-									Leer datosEstudiantesCaracter[IdEstudianteBuscar,1]
+									Leer datosEstudiantesCaracter[idEstudianteBuscar,1]
 								2:
 									// Actualizar nombre
 									Escribir "Ingrese los apellidos y nombres (en ese orden, en mayúsculas) actualizados del estudiante:"
-									Leer datosEstudiantesCaracter[IdEstudianteBuscar,2]
+									Leer datosEstudiantesCaracter[idEstudianteBuscar,2]
 								3:
 									// Actualizar carrera
 									Escribir "Elija la carrera actualizada del estudiante:"
 									Para j<-1 Hasta cantidadCarreras Hacer
 										Escribir j,". ",nombreCarrera[j]
 									FinPara
-									datosEstudiantesEntero[IdEstudianteBuscar,1] <- IngresarEnteroValido(1,3)
+									datosEstudiantesEntero[idEstudianteBuscar,1] <- IngresarEnteroValido(1,3)
 								4:
 									// Actualizar ciclo
 									Escribir "Ingrese el ciclo actualizado, del 1 al 10."
-									datosEstudiantesEntero[IdEstudianteBuscar,2] <- IngresarEnteroValido(1,10)
+									datosEstudiantesEntero[idEstudianteBuscar,2] <- IngresarEnteroValido(1,10)
 								De Otro Modo:
 									// Volver al menú principal
 							FinSegun
@@ -342,10 +345,83 @@ Algoritmo ProdAcred
 				FinSegun
 				
 				
+				
 			2:
 				// GESTIÓN DE CURSOS
 				Escribir "=== GESTIÓN DE CURSOS ==="
-				GestionCursos
+				Escribir "1. Mostrar lista de cursos por carrera o ciclo."
+				Escribir "2. Registrar un nuevo curso."
+				Escribir "3. Buscar curso y/o actualizar información."
+				Escribir "(otro número). Regresar al menú principal."
+				Leer accionMenu
+				Segun accionMenu Hacer
+					1:
+						// LISTA DE CURSOS POR CARRERA Y CICLO
+						Escribir "Elija la carrera de los cursos a mostrar:"
+						Para i<-1 Hasta cantidadCarreras Hacer
+							Escribir i,". ",nombreCarrera[i]
+						FinPara
+						cursoCarreraSeleccionado <- IngresarEnteroValido(1,cantidadCarreras)
+						Escribir "Ingrese el ciclo, del 1 al 10, de los cursos a mostrar:"
+						cursoCicloSeleccionado <- IngresarEnteroValido(1,10)
+						Para i<-1 Hasta 10 Hacer
+							Si datosCursosCaracter[cursoCarreraSeleccionado,cursoCicloSeleccionado,i,1] <> "" Entonces
+								Escribir "Curso ",i,": ",datosCursosCaracter[cursoCarreraSeleccionado,cursoCicloSeleccionado,i,2]
+								Escribir "    Código ",datosCursosCaracter[cursoCarreraSeleccionado,cursoCicloSeleccionado,i,1]
+								Si datosCursosCaracter[cursoCarreraSeleccionado,cursoCicloSeleccionado,i,3] = "0" Entonces
+									Escribir "    No tiene prerequisitos."
+								SiNo
+									Escribir "    Prerequisito: ", datosCursosCaracter[cursoCarreraSeleccionado,cursoCicloSeleccionado,i,3] 
+								FinSi
+							FinSi
+						FinPara
+					2:
+						// REGISTRAR UN NUEVO CURSO
+						Escribir "Elija la carrera a la que se va a agregar el curso:"
+						Para i<-1 Hasta cantidadCarreras Hacer
+							Escribir i,". ",nombreCarrera[i]
+						FinPara
+						cursoCarreraSeleccionado <- IngresarEnteroValido(1,cantidadCarreras)
+						Escribir "Ingrese el ciclo, del 1 al 10, al que se va a agregar el curso:"
+						cursoCicloSeleccionado <- IngresarEnteroValido(1,10)
+						// Asignar ID interno del nuevo curso
+						idNuevoCurso <- 0
+						Repetir
+							idNuevoCurso <- idNuevoCurso +1
+						Hasta Que (datosCursosCaracter[cursoCarreraSeleccionado,cursoCicloSeleccionado,idNuevoCurso,1] = "" o idNuevoCurso > 9)
+						Si (idNuevoCurso = 10 y datosCursosCaracter[cursoCarreraSeleccionado,cursoCicloSeleccionado,idNuevoCurso,1] <> "") Entonces
+							Escribir "Ya se alcanzó el máximo de 10 cursos en este ciclo."
+						SiNo
+							// Registrar información del nuevo curso:
+							Escribir "Ingrese el código exacto del nuevo curso (de la forma ABCD1001):"
+							Leer datosCursosCaracter[cursoCarreraSeleccionado,cursoCicloSeleccionado,idNuevoCurso,1]
+							Escribir "Ingrese el nombre del nuevo curso:"
+							Leer datosCursosCaracter[cursoCarreraSeleccionado,cursoCicloSeleccionado,idNuevoCurso,2]
+							Escribir "Ingrese el código del curso prerequisito, o 0 si no tiene ninguno:"
+							Leer datosCursosCaracter[cursoCarreraSeleccionado,cursoCicloSeleccionado,idNuevoCurso,3]
+							Escribir "Ingrese el número de créditos, de 1 a 9:"
+							datosCursosEntero[cursoCarreraSeleccionado,cursoCicloSeleccionado,idNuevoCurso,1] <- IngresarEnteroValido(1,9)
+							// Asignar cupos actuales a 0
+							datosCursosEntero[cursoCarreraSeleccionado,cursoCicloSeleccionado,idNuevoCurso,2] <- 0
+							Escribir "Ingrese el número de cupos máximos, de 10 a 60:"
+							datosCursosEntero[cursoCarreraSeleccionado,cursoCicloSeleccionado,idNuevoCurso,3] <- IngresarEnteroValido(10,60)
+							Escribir "Curso registrado correctamente."
+						FinSi
+					3:
+						// BUSCAR CURSO Y/O ACTUALIZAR INFORMACIÓN
+						Escribir "Elija la carrera del curso a buscar:"
+						Para i<-1 Hasta cantidadCarreras Hacer
+							Escribir i,". ",nombreCarrera[i]
+						FinPara
+						cursoCarreraSeleccionado <- IngresarEnteroValido(1,cantidadCarreras)
+						Escribir "Ingrese el ciclo, del 1 al 10, del curso a buscar:"
+						cursoCicloSeleccionado <- IngresarEnteroValido(1,10)
+						Escribir "Ingrese el código exacto del curso a buscar (de la forma ABCD1001):
+						Leer cursoCodigoBuscar
+						// buscar
+					De Otro Modo:
+						// No hace nada
+				FinSegun
 				
 			3:
 				// Procesos de matrícula
