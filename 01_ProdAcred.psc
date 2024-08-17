@@ -18,7 +18,7 @@ Algoritmo ProdAcred
 	//     DEFINICIONES BASE
 	Definir cantidadEstudiantes, cantidadCursos, cantidadCarreras Como Entero
 	cantidadEstudiantes <- 9
-	cantidadCursos <- 4
+	cantidadCursos <- 24
 	cantidadCarreras <- 3
 	
 	
