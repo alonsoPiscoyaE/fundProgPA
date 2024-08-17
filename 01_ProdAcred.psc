@@ -1,4 +1,4 @@
-
+// FUNCIONES Y SUBPROCESOS DEFINIDOS MANUALMENTE
 Funcion valorVerificado <- IngresarEnteroValido(limInf,limSup)
 	// FUNCION PARA LEER ENTEROS QUE NECESARIAMENTE DEBEN ESTAR EN UN INTERVALO
 	Definir valorIngresado Como Entero
@@ -12,43 +12,7 @@ FinFuncion
 
 
 
-Funcion GestionCursos
-	// Contiene las funciones:
-	// 		RegistrarCursos() : agregar cursos (código, nombre, créditos, cupos máximos)
-	// 		ActualizarCursos() : editar información ya registrada
-	// 		MostrarCursos() : mostrar lista de cursos disponibles por carrera o por ciclo
-FinFuncion
-
-
-
-Funcion ProcesoMatricula
-	// Contiene las funciones:
-	// 		MatricularEstudianteEnCurso() : Agregar estudiante a ciertos cursos acorde a su ciclo y carrera
-	// 		VerificarMatricula() : Verificar prerequisitos y conflictos horarios 
-	// 		GenerarBoletaMatricula() : con costo total
-FinFuncion
-
-
-
-Funcion GestionPagos
-	// Contiene las funciones:
-	// 		RegistrarPagos() : de matrícula
-	// 		CalcularDscto() : por pronto pago o becas.
-	// Pago único al inicio de ciclo
-	// Si hay beca o media beca descuento 100% o 50%.
-	// La condicion de becado es tambien parte de la info de cada estudiante
-FinFuncion
-
-
-
-Funcion ReportesAcademicos
-	// Contiene las funciones:
-	//		GenerarReporteEstudiante() : por estudiante, ingresando dni.
-	//		EstadísticasMatrícula(): por curso o por carrera
-FinFuncion
-
-
-
+// ALGORITMO PRINCIPAL
 Algoritmo ProdAcred
 	
 	//     DEFINICIONES BASE
@@ -230,10 +194,13 @@ Algoritmo ProdAcred
 	Definir idEstudianteBuscar Como Entero
 	// GESTION CURSOS
 	Definir cursoCodigoBuscar Como Caracter
-	Definir cursoCarreraSeleccionado, cursoCicloSeleccionado, idCursoNuevo Como Entero
+	Definir cursoCarreraSeleccionado, cursoCicloSeleccionado, idCursoNuevo, cursoCantidadBusq Como Entero
 	// SALIR DEL PROGRAMA
 	Definir verifSalirPrograma Como Real
 	verifSalirPrograma <- 1
+	
+	
+	
 	
 	
 	// MENU PRINCIPAL, recursivo hasta que verifSalirPrograma lo detenga
@@ -309,7 +276,7 @@ Algoritmo ProdAcred
 							Escribir "    Código ",datosEstudiantesCaracter[idEstudianteBuscar,1],", " Sin Saltar
 							Escribir nombreCarrera[datosEstudiantesEntero[idEstudianteBuscar,1]],", ciclo ",datosEstudiantesEntero[idEstudianteBuscar,2]
 							// Proceder a la actualización de un valor
-							Escribir "Elija la opción a actualizar:"
+							Escribir "¿Desea actualizar la información de este estudiante?"
 							Escribir "1. Código"
 							Escribir "2. Apellidos y nombres"
 							Escribir "3. Carrera"
@@ -346,6 +313,8 @@ Algoritmo ProdAcred
 				
 				
 				
+				
+				
 			2:
 				// GESTIÓN DE CURSOS
 				Escribir "=== GESTIÓN DE CURSOS ==="
@@ -366,6 +335,7 @@ Algoritmo ProdAcred
 						cursoCicloSeleccionado <- IngresarEnteroValido(1,10)
 						Para i<-1 Hasta 10 Hacer
 							Si datosCursosCaracter[cursoCarreraSeleccionado,cursoCicloSeleccionado,i,1] <> "" Entonces
+								// Imprimir curso
 								Escribir "Curso ",i,": ",datosCursosCaracter[cursoCarreraSeleccionado,cursoCicloSeleccionado,i,2]
 								Escribir "    Código ",datosCursosCaracter[cursoCarreraSeleccionado,cursoCicloSeleccionado,i,1]
 								Si datosCursosCaracter[cursoCarreraSeleccionado,cursoCicloSeleccionado,i,3] = "0" Entonces
@@ -373,6 +343,8 @@ Algoritmo ProdAcred
 								SiNo
 									Escribir "    Prerequisito: ", datosCursosCaracter[cursoCarreraSeleccionado,cursoCicloSeleccionado,i,3] 
 								FinSi
+								Escribir "    Créditos: ",datosCursosEntero[cursoCarreraSeleccionado,cursoCicloSeleccionado,i,1]
+								Escribir "    Cupos: ",datosCursosEntero[cursoCarreraSeleccionado,cursoCicloSeleccionado,i,2]," de ",datosCursosEntero[cursoCarreraSeleccionado,cursoCicloSeleccionado,i,3]
 							FinSi
 						FinPara
 					2:
@@ -409,34 +381,110 @@ Algoritmo ProdAcred
 						FinSi
 					3:
 						// BUSCAR CURSO Y/O ACTUALIZAR INFORMACIÓN
-						Escribir "Elija la carrera del curso a buscar:"
-						Para i<-1 Hasta cantidadCarreras Hacer
-							Escribir i,". ",nombreCarrera[i]
-						FinPara
-						cursoCarreraSeleccionado <- IngresarEnteroValido(1,cantidadCarreras)
-						Escribir "Ingrese el ciclo, del 1 al 10, del curso a buscar:"
-						cursoCicloSeleccionado <- IngresarEnteroValido(1,10)
-						Escribir "Ingrese el código exacto del curso a buscar (de la forma ABCD1001):
+						Escribir "Ingrese el código exacto del curso a buscar (de la forma ABCD1001):"
 						Leer cursoCodigoBuscar
-						// buscar
+						// Restablecer contador de búsqueda
+						cursoCantidadBusq <- 0
+						Escribir "Resultados de búsqueda:"
+						Para i<-1 Hasta cantidadCarreras Hacer // Busca cada carrera
+							Para j<-1 Hasta 10 Hacer           // Busca cada ciclo
+								Para k<-1 Hasta 10 Hacer       // Busca cada espacio de los 10 max. de cursos.
+									Si datosCursosCaracter[i,j,k,1] = cursoCodigoBuscar Entonces
+										// Imprimir curso
+										Escribir datosCursosCaracter[i,j,k,1],": ",datosCursosCaracter[i,j,k,2]
+										Escribir "    ",nombreCarrera[i],", ciclo ",j,"."
+										Si datosCursosCaracter[i,j,k,3] = "0" Entonces
+											Escribir "    No tiene prerequisitos."
+										SiNo
+											Escribir "    Prerequisito: ", datosCursosCaracter[i,j,k,3] 
+										FinSi
+										Escribir "    Créditos: ",datosCursosEntero[i,j,k,1]
+										Escribir "    Cupos: ",datosCursosEntero[i,j,k,2]," de ",datosCursosEntero[i,j,k,3]
+										cursoCantidadBusq <- cursoCantidadBusq+1
+										// Proceder a la actualización del curso
+										Escribir "¿Desea actualizar algún dato de este curso?"
+										Escribir "1. Código"
+										Escribir "2. Nombre"
+										Escribir "3. Código del prerrequisito"
+										Escribir "4. Créditos"
+										Escribir "5. Cupos máximos"
+										Escribir "(otro número). No actualizar nada"
+										Leer accionMenu
+										Segun accionMenu Hacer
+											1:
+												// Actualizar código
+												Escribir "Ingrese el código exacto actualizado del curso (de la forma ABCD1001):"
+												Leer datosCursosCaracter[i,j,k,1]
+											2:
+												// Actualizar nombre
+												Escribir "Ingrese el nombre actualizado del curso:"
+												Leer datosCursosCaracter[i,j,k,2]
+											3:
+												// Actualizar código prerrequisito
+												Escribir "Ingrese el código del curso prerequisito, o 0 si no tiene ninguno:"
+												Leer datosCursosCaracter[i,j,k,3]
+											4:
+												// Actualizar créditos
+												Escribir "Ingrese el número de créditos, de 1 a 9:"
+												datosCursosEntero[i,j,k,1] <- IngresarEnteroValido(1,9)
+											5:
+												// Actualizar cupos máximos
+												Escribir "Ingrese el número de cupos máximos, de 10 a 60:"
+												datosCursosEntero[i,j,k,3] <- IngresarEnteroValido(10,60)
+											De Otro Modo:
+												// Continuar búsqueda o volver al menú principal.
+										FinSegun
+									FinSi
+								FinPara
+							FinPara
+						FinPara
+						Si cursoCantidadBusq <- 0 Entonces
+							Escribir "No se encontró ningún curso con el código proporcionado"
+						FinSi
 					De Otro Modo:
 						// No hace nada
 				FinSegun
 				
+				
+				
+				
+				
 			3:
 				// Procesos de matrícula
+				// Contiene las funciones:
+				// 		MatricularEstudianteEnCurso() : Agregar estudiante a ciertos cursos acorde a su ciclo y carrera
+				// 		VerificarMatricula() : Verificar prerequisitos y conflictos horarios 
+				// 		GenerarBoletaMatricula() : con costo total
 				Escribir "=== MATRÍCULA ==="
-				ProcesoMatricula
+				
+				
+				
+				
 				
 			4:
 				// Gestión de Pagos
+				// Contiene las funciones:
+				// 		RegistrarPagos() : de matrícula
+				// 		CalcularDscto() : por pronto pago o becas.
+				// Pago único al inicio de ciclo
+				// Si hay beca o media beca descuento 100% o 50%.
+				// La condicion de becado es tambien parte de la info de cada estudiante
 				Escribir "=== PAGOS ==="
-				GestionPagos
+				
+				
+				
+				
 				
 			5:
 				// Reportes Académicos
+				// Contiene las funciones:
+				//		GenerarReporteEstudiante() : por estudiante, ingresando dni.
+				//		EstadísticasMatrícula(): por curso o por carrera
 				Escribir "=== REPORTES ACADÉMICOS ==="
-				ReportesAcademicos
+				
+				
+				
+				
 				
 			6:
 				// Diálogo para salir del programa
