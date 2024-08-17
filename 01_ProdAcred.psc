@@ -96,96 +96,202 @@ Algoritmo ProdAcred
 	nombreCarrera[3] <- "Arquitectura"           // ID interno: 3
 	
 	// ESTUDIANTES (ID 1 a 9)
-	datosEstudiantesCaracter[1,1] <- "231639H"  // Codigo
-	datosEstudiantesCaracter[1,2] <- "PISCOYA ENCAJIMA JOSE ALONSO"
-	datosEstudiantesEntero[1,1] <- 2  // Sistemas
-	datosEstudiantesEntero[1,2] <- 9  // Ciclo
-	datosEstudiantesCaracter[2,1] <- "231645H"  // Codigo
-	datosEstudiantesCaracter[2,2] <- "VILLEGAS CUENCA JOSE MANUEL"
-	datosEstudiantesEntero[2,1] <- 2  // Sistemas
-	datosEstudiantesEntero[2,2] <- 8  // Ciclo
-	datosEstudiantesCaracter[3,1] <- "231625G"  // Codigo
-	datosEstudiantesCaracter[3,2] <- "CAUCHOS LABAN NELSON ANIBAL"
-	datosEstudiantesEntero[3,1] <- 2  // Sistemas
-	datosEstudiantesEntero[3,2] <- 7  // Ciclo
-	datosEstudiantesCaracter[4,1] <- "231624K"  // Codigo
-	datosEstudiantesCaracter[4,2] <- "CASTRO MENDOZA JHORDY FABRICIO"
-	datosEstudiantesEntero[4,1] <- 1  // Civil
-	datosEstudiantesEntero[4,2] <- 6  // Ciclo
-	datosEstudiantesCaracter[5,1] <- "231620E"  // Codigo
-	datosEstudiantesCaracter[5,2] <- "BARRERA ALVARADO HENRY CRISTIAN"
-	datosEstudiantesEntero[5,1] <- 1  // Civil
-	datosEstudiantesEntero[5,2] <- 4  // Ciclo
-	datosEstudiantesCaracter[6,1] <- "231640F"  // Codigo
-	datosEstudiantesCaracter[6,2] <- "QUISPE CABEZAS JUAN DE DIOS"
-	datosEstudiantesEntero[6,1] <- 1  // Civil
-	datosEstudiantesEntero[6,2] <- 2  // Ciclo
-	datosEstudiantesCaracter[7,1] <- "231638A"  // Codigo
-	datosEstudiantesCaracter[7,2] <- "PAREDES AGUINAGA JOSUE SAMUEL"
-	datosEstudiantesEntero[7,1] <- 3  // Arquitectura
-	datosEstudiantesEntero[7,2] <- 5  // Ciclo
-	datosEstudiantesCaracter[8,1] <- "231631G"  // Codigo
-	datosEstudiantesCaracter[8,2] <- "LOZANO PAZ ABIMA GALILEY"
-	datosEstudiantesEntero[8,1] <- 3  // Arquitectura
-	datosEstudiantesEntero[8,2] <- 3  // Ciclo
-	datosEstudiantesCaracter[9,1] <- "231636I"  // Codigo
-	datosEstudiantesCaracter[9,2] <- "NUÑEZ RUBIO MAICOL JHORDY"
-	datosEstudiantesEntero[9,1] <- 3  // Arquitectura
-	datosEstudiantesEntero[9,2] <- 1  // Ciclo
+		datosEstudiantesCaracter[1,1] <- "231639H"  // Codigo
+		datosEstudiantesCaracter[1,2] <- "PISCOYA ENCAJIMA JOSE ALONSO"
+		datosEstudiantesEntero[1,1] <- 2  // Sistemas
+		datosEstudiantesEntero[1,2] <- 9  // Ciclo
+		datosEstudiantesCaracter[2,1] <- "231645H"  // Codigo
+		datosEstudiantesCaracter[2,2] <- "VILLEGAS CUENCA JOSE MANUEL"
+		datosEstudiantesEntero[2,1] <- 2  // Sistemas
+		datosEstudiantesEntero[2,2] <- 8  // Ciclo
+		datosEstudiantesCaracter[3,1] <- "231625G"  // Codigo
+		datosEstudiantesCaracter[3,2] <- "CAUCHOS LABAN NELSON ANIBAL"
+		datosEstudiantesEntero[3,1] <- 2  // Sistemas
+		datosEstudiantesEntero[3,2] <- 7  // Ciclo
+		datosEstudiantesCaracter[4,1] <- "231624K"  // Codigo
+		datosEstudiantesCaracter[4,2] <- "CASTRO MENDOZA JHORDY FABRICIO"
+		datosEstudiantesEntero[4,1] <- 1  // Civil
+		datosEstudiantesEntero[4,2] <- 6  // Ciclo
+		datosEstudiantesCaracter[5,1] <- "231620E"  // Codigo
+		datosEstudiantesCaracter[5,2] <- "BARRERA ALVARADO HENRY CRISTIAN"
+		datosEstudiantesEntero[5,1] <- 1  // Civil
+		datosEstudiantesEntero[5,2] <- 4  // Ciclo
+		datosEstudiantesCaracter[6,1] <- "231640F"  // Codigo
+		datosEstudiantesCaracter[6,2] <- "QUISPE CABEZAS JUAN DE DIOS"
+		datosEstudiantesEntero[6,1] <- 1  // Civil
+		datosEstudiantesEntero[6,2] <- 2  // Ciclo
+		datosEstudiantesCaracter[7,1] <- "231638A"  // Codigo
+		datosEstudiantesCaracter[7,2] <- "PAREDES AGUINAGA JOSUE SAMUEL"
+		datosEstudiantesEntero[7,1] <- 3  // Arquitectura
+		datosEstudiantesEntero[7,2] <- 5  // Ciclo
+		datosEstudiantesCaracter[8,1] <- "231631G"  // Codigo
+		datosEstudiantesCaracter[8,2] <- "LOZANO PAZ ABIMA GALILEY"
+		datosEstudiantesEntero[8,1] <- 3  // Arquitectura
+		datosEstudiantesEntero[8,2] <- 3  // Ciclo
+		datosEstudiantesCaracter[9,1] <- "231636I"  // Codigo
+		datosEstudiantesCaracter[9,2] <- "NUÑEZ RUBIO MAICOL JHORDY"
+		datosEstudiantesEntero[9,1] <- 3  // Arquitectura
+		datosEstudiantesEntero[9,2] <- 1  // Ciclo
 	
-	// CARRERAS ING. CIVIL
-	// Ciclo 1
-	datosCursosCaracter[1,1,1,1] <- "MATG1001" // Código de curso 1
-	datosCursosCaracter[1,1,1,2] <- "Fundamentos matemáticos"
-	datosCursosCaracter[1,1,1,3] <- "0"    // Sin prerrequisito
-	datosCursosEntero[1,1,1,1] <- 4    // Créditos
-	datosCursosEntero[1,1,1,2] <- 0    // Cupos actuales
-	datosCursosEntero[1,1,1,3] <- 35    // Cupos máximos
-	datosCursosCaracter[1,1,2,1] <- "MATG1002" // Código de curso 2
-	datosCursosCaracter[1,1,2,2] <- "Geometría descriptiva"
-	datosCursosCaracter[1,1,2,3] <- "0"    // Sin prerrequisito
-	datosCursosEntero[1,1,2,1] <- 3    // Créditos
-	datosCursosEntero[1,1,2,2] <- 0    // Cupos actuales
-	datosCursosEntero[1,1,2,3] <- 40    // Cupos máximos
-	// Ciclo 2
-	datosCursosCaracter[1,2,1,1] <- "CALC1011" // Código de curso 1
-	datosCursosCaracter[1,2,1,2] <- "Cálculo Diferencial"
-	datosCursosCaracter[1,2,1,3] <- "MATG1001" // Prerrequisito
-	datosCursosEntero[1,2,1,1] <- 5    // Créditos
-	datosCursosEntero[1,2,1,2] <- 0    // Cupos actuales
-	datosCursosEntero[1,2,1,3] <- 30    // Cupos máximos
-	datosCursosCaracter[1,2,2,1] <- "ALIN1101" // Código de curso 2
-	datosCursosCaracter[1,2,2,2] <- "Álgebra Lineal 1"
-	datosCursosCaracter[1,2,2,3] <- "MATG1002" // Prerrequisito
-	datosCursosEntero[1,2,2,1] <- 4    // Créditos
-	datosCursosEntero[1,2,2,2] <- 0    // Cupos actuales
-	datosCursosEntero[1,2,2,3] <- 30    // Cupos máximos
-	// Ciclo 3
-	datosCursosCaracter[1,3,1,1] <- "CALC1012" // Código de curso 1
-	datosCursosCaracter[1,3,1,2] <- "Cálculo Integral"
-	datosCursosCaracter[1,3,1,3] <- "CALC1011"    // Prerrequisito
-	datosCursosEntero[1,3,1,1] <- 4    // Créditos
-	datosCursosEntero[1,3,1,2] <- 0    // Cupos actuales
-	datosCursosEntero[1,3,1,3] <- 30    // Cupos máximos
-	datosCursosCaracter[1,3,2,1] <- "ALIN1102" // Código de curso 2
-	datosCursosCaracter[1,3,2,2] <- "Álgebra Lineal 2"
-	datosCursosCaracter[1,3,2,3] <- "ALIN1101"    // Prerrequisito
-	datosCursosEntero[1,3,2,1] <- 3    // Créditos
-	datosCursosEntero[1,3,2,2] <- 0    // Cupos actuales
-	datosCursosEntero[1,3,2,3] <- 25    // Cupos máximos
-	// Ciclo 4
-	datosCursosCaracter[1,4,1,1] <- "MATE4011" // Código de curso 1
-	datosCursosCaracter[1,4,1,2] <- "Análisis Real Avanzado"
-	datosCursosCaracter[1,4,1,3] <- "CALC1012" // Prerrequisito
-	datosCursosEntero[1,4,1,1] <- 5    // Créditos
-	datosCursosEntero[1,4,1,2] <- 0    // Cupos actuales
-	datosCursosEntero[1,4,1,3] <- 28    // Cupos máximos
-	datosCursosCaracter[1,4,2,1] <- "CIVI4001" // Código de curso 2
-	datosCursosCaracter[1,4,2,2] <- "Introducción a la planificación de construcciones"
-	datosCursosCaracter[1,4,2,3] <- "ALIN1102" // Prerrequisito
-	datosCursosEntero[1,4,2,1] <- 4    // Créditos
-	datosCursosEntero[1,4,2,2] <- 0    // Cupos actuales
-	datosCursosEntero[1,4,2,3] <- 20    // Cupos máximos
+	// CARRERAS ING. CIVIL (ID 1)
+		// Ciclo 1
+			datosCursosCaracter[1,1,1,1] <- "MATG1001" // Código de curso 1
+			datosCursosCaracter[1,1,1,2] <- "Fundamentos matemáticos"
+			datosCursosCaracter[1,1,1,3] <- "0"    // Sin prerrequisito
+			datosCursosEntero[1,1,1,1] <- 4    // Créditos
+			datosCursosEntero[1,1,1,2] <- 0    // Cupos actuales
+			datosCursosEntero[1,1,1,3] <- 35    // Cupos máximos
+			datosCursosCaracter[1,1,2,1] <- "MATG1002" // Código de curso 2
+			datosCursosCaracter[1,1,2,2] <- "Geometría descriptiva"
+			datosCursosCaracter[1,1,2,3] <- "0"    // Sin prerrequisito
+			datosCursosEntero[1,1,2,1] <- 3    // Créditos
+			datosCursosEntero[1,1,2,2] <- 0    // Cupos actuales
+			datosCursosEntero[1,1,2,3] <- 40    // Cupos máximos
+		// Ciclo 2
+			datosCursosCaracter[1,2,1,1] <- "CALC1011" // Código de curso 1
+			datosCursosCaracter[1,2,1,2] <- "Cálculo Diferencial"
+			datosCursosCaracter[1,2,1,3] <- "MATG1001" // Prerrequisito
+			datosCursosEntero[1,2,1,1] <- 5    // Créditos
+			datosCursosEntero[1,2,1,2] <- 0    // Cupos actuales
+			datosCursosEntero[1,2,1,3] <- 30    // Cupos máximos
+			datosCursosCaracter[1,2,2,1] <- "ALIN1101" // Código de curso 2
+			datosCursosCaracter[1,2,2,2] <- "Álgebra Lineal 1"
+			datosCursosCaracter[1,2,2,3] <- "MATG1002" // Prerrequisito
+			datosCursosEntero[1,2,2,1] <- 4    // Créditos
+			datosCursosEntero[1,2,2,2] <- 0    // Cupos actuales
+			datosCursosEntero[1,2,2,3] <- 30    // Cupos máximos
+		// Ciclo 3
+			datosCursosCaracter[1,3,1,1] <- "CALC1012" // Código de curso 1
+			datosCursosCaracter[1,3,1,2] <- "Cálculo Integral"
+			datosCursosCaracter[1,3,1,3] <- "CALC1011"    // Prerrequisito
+			datosCursosEntero[1,3,1,1] <- 4    // Créditos
+			datosCursosEntero[1,3,1,2] <- 0    // Cupos actuales
+			datosCursosEntero[1,3,1,3] <- 30    // Cupos máximos
+			datosCursosCaracter[1,3,2,1] <- "ALIN1102" // Código de curso 2
+			datosCursosCaracter[1,3,2,2] <- "Álgebra Lineal 2"
+			datosCursosCaracter[1,3,2,3] <- "ALIN1101"    // Prerrequisito
+			datosCursosEntero[1,3,2,1] <- 3    // Créditos
+			datosCursosEntero[1,3,2,2] <- 0    // Cupos actuales
+			datosCursosEntero[1,3,2,3] <- 25    // Cupos máximos
+		// Ciclo 4
+			datosCursosCaracter[1,4,1,1] <- "MATE4011" // Código de curso 1
+			datosCursosCaracter[1,4,1,2] <- "Análisis Real Avanzado"
+			datosCursosCaracter[1,4,1,3] <- "CALC1012" // Prerrequisito
+			datosCursosEntero[1,4,1,1] <- 5    // Créditos
+			datosCursosEntero[1,4,1,2] <- 0    // Cupos actuales
+			datosCursosEntero[1,4,1,3] <- 28    // Cupos máximos
+			datosCursosCaracter[1,4,2,1] <- "CIVI4001" // Código de curso 2
+			datosCursosCaracter[1,4,2,2] <- "Introducción a la planificación de construcciones"
+			datosCursosCaracter[1,4,2,3] <- "ALIN1102" // Prerrequisito
+			datosCursosEntero[1,4,2,1] <- 4    // Créditos
+			datosCursosEntero[1,4,2,2] <- 0    // Cupos actuales
+			datosCursosEntero[1,4,2,3] <- 20    // Cupos máximos
+	// CARRERAS ING. SISTEMAS (ID 2)
+		// Ciclo 1
+			datosCursosCaracter[2,1,1,1] <- "MATG1001" // Código de curso 1
+			datosCursosCaracter[2,1,1,2] <- "Fundamentos matemáticos"
+			datosCursosCaracter[2,1,1,3] <- "0"    // Sin prerrequisito
+			datosCursosEntero[2,1,1,1] <- 4    // Créditos
+			datosCursosEntero[2,1,1,2] <- 0    // Cupos actuales
+			datosCursosEntero[2,1,1,3] <- 35    // Cupos máximos
+			datosCursosCaracter[2,1,2,1] <- "COMG1001" // Código de curso 2
+			datosCursosCaracter[2,1,2,2] <- "Introducción a la Computación"
+			datosCursosCaracter[2,1,2,3] <- "0"    // Sin prerrequisito
+			datosCursosEntero[2,1,2,1] <- 3    // Créditos
+			datosCursosEntero[2,1,2,2] <- 0    // Cupos actuales
+			datosCursosEntero[2,1,2,3] <- 40    // Cupos máximos
+		// Ciclo 2
+			datosCursosCaracter[2,2,1,1] <- "CALC1011" // Código de curso 1
+			datosCursosCaracter[2,2,1,2] <- "Cálculo Diferencial"
+			datosCursosCaracter[2,2,1,3] <- "MATG1001" // Prerrequisito
+			datosCursosEntero[2,2,1,1] <- 5    // Créditos
+			datosCursosEntero[2,2,1,2] <- 0    // Cupos actuales
+			datosCursosEntero[2,2,1,3] <- 30    // Cupos máximos
+			datosCursosCaracter[2,2,2,1] <- "PROG2101" // Código de curso 2
+			datosCursosCaracter[2,2,2,2] <- "Fundamentos de Programación"
+			datosCursosCaracter[2,2,2,3] <- "COMG1001" // Prerrequisito
+			datosCursosEntero[2,2,2,1] <- 4    // Créditos
+			datosCursosEntero[2,2,2,2] <- 0    // Cupos actuales
+			datosCursosEntero[2,2,2,3] <- 30    // Cupos máximos
+		// Ciclo 3
+			datosCursosCaracter[2,3,1,1] <- "CALC1012" // Código de curso 1
+			datosCursosCaracter[2,3,1,2] <- "Cálculo Integral"
+			datosCursosCaracter[2,3,1,3] <- "CALC1011"    // Prerrequisito
+			datosCursosEntero[2,3,1,1] <- 4    // Créditos
+			datosCursosEntero[2,3,1,2] <- 0    // Cupos actuales
+			datosCursosEntero[2,3,1,3] <- 30    // Cupos máximos
+			datosCursosCaracter[2,3,2,1] <- "PROG2102" // Código de curso 2
+			datosCursosCaracter[2,3,2,2] <- "Programación Orientada a Objetos"
+			datosCursosCaracter[2,3,2,3] <- "PROG2101"    // Prerrequisito
+			datosCursosEntero[2,3,2,1] <- 3    // Créditos
+			datosCursosEntero[2,3,2,2] <- 0    // Cupos actuales
+			datosCursosEntero[2,3,2,3] <- 25    // Cupos máximos
+		// Ciclo 4
+			datosCursosCaracter[2,4,1,1] <- "ESTC4101" // Código de curso 1
+			datosCursosCaracter[2,4,1,2] <- "Estadística"
+			datosCursosCaracter[2,4,1,3] <- "CALC1012" // Prerrequisito
+			datosCursosEntero[2,4,1,1] <- 5    // Créditos
+			datosCursosEntero[2,4,1,2] <- 0    // Cupos actuales
+			datosCursosEntero[2,4,1,3] <- 28    // Cupos máximos
+			datosCursosCaracter[2,4,2,1] <- "ISIC4101" // Código de curso 2
+			datosCursosCaracter[2,4,2,2] <- "Introducción a la Teoría de Sistemas"
+			datosCursosCaracter[2,4,2,3] <- "PROG2102" // Prerrequisito
+			datosCursosEntero[2,4,2,1] <- 4    // Créditos
+			datosCursosEntero[2,4,2,2] <- 0    // Cupos actuales
+			datosCursosEntero[2,4,2,3] <- 20    // Cupos máximos
+	// CARRERAS ARQUITECTURA (ID 3)
+			// Ciclo 1
+			datosCursosCaracter[3,1,1,1] <- "MATG1001" // Código de curso 1
+			datosCursosCaracter[3,1,1,2] <- "Fundamentos matemáticos"
+			datosCursosCaracter[3,1,1,3] <- "0"    // Sin prerrequisito
+			datosCursosEntero[3,1,1,1] <- 4    // Créditos
+			datosCursosEntero[3,1,1,2] <- 0    // Cupos actuales
+			datosCursosEntero[3,1,1,3] <- 35    // Cupos máximos
+			datosCursosCaracter[3,1,2,1] <- "MATG1002" // Código de curso 2
+			datosCursosCaracter[3,1,2,2] <- "Geometría descriptiva"
+			datosCursosCaracter[3,1,2,3] <- "0"    // Sin prerrequisito
+			datosCursosEntero[3,1,2,1] <- 3    // Créditos
+			datosCursosEntero[3,1,2,2] <- 0    // Cupos actuales
+			datosCursosEntero[3,1,2,3] <- 40    // Cupos máximos
+			// Ciclo 2
+			datosCursosCaracter[3,2,1,1] <- "CALC1011" // Código de curso 1
+			datosCursosCaracter[3,2,1,2] <- "Cálculo Diferencial"
+			datosCursosCaracter[3,2,1,3] <- "MATG1001" // Prerrequisito
+			datosCursosEntero[3,2,1,1] <- 5    // Créditos
+			datosCursosEntero[3,2,1,2] <- 0    // Cupos actuales
+			datosCursosEntero[3,2,1,3] <- 30    // Cupos máximos
+			datosCursosCaracter[3,2,2,1] <- "DTEN1101" // Código de curso 2
+			datosCursosCaracter[3,2,2,2] <- "Dibujo Técnico 1"
+			datosCursosCaracter[3,2,2,3] <- "MATG1002" // Prerrequisito
+			datosCursosEntero[3,2,2,1] <- 4    // Créditos
+			datosCursosEntero[3,2,2,2] <- 0    // Cupos actuales
+			datosCursosEntero[3,2,2,3] <- 30    // Cupos máximos
+			// Ciclo 3
+			datosCursosCaracter[3,3,1,1] <- "CALC1012" // Código de curso 1
+			datosCursosCaracter[3,3,1,2] <- "Cálculo Integral"
+			datosCursosCaracter[3,3,1,3] <- "CALC1011"    // Prerrequisito
+			datosCursosEntero[3,3,1,1] <- 4    // Créditos
+			datosCursosEntero[3,3,1,2] <- 0    // Cupos actuales
+			datosCursosEntero[3,3,1,3] <- 30    // Cupos máximos
+			datosCursosCaracter[3,3,2,1] <- "DTEN1102" // Código de curso 2
+			datosCursosCaracter[3,3,2,2] <- "Dibujo Técnico 2"
+			datosCursosCaracter[3,3,2,3] <- "DTEN1101"    // Prerrequisito
+			datosCursosEntero[3,3,2,1] <- 3    // Créditos
+			datosCursosEntero[3,3,2,2] <- 0    // Cupos actuales
+			datosCursosEntero[3,3,2,3] <- 25    // Cupos máximos
+			// Ciclo 4
+			datosCursosCaracter[3,4,1,1] <- "MATE4011" // Código de curso 1
+			datosCursosCaracter[3,4,1,2] <- "Análisis Real Avanzado"
+			datosCursosCaracter[3,4,1,3] <- "CALC1012" // Prerrequisito
+			datosCursosEntero[3,4,1,1] <- 5    // Créditos
+			datosCursosEntero[3,4,1,2] <- 0    // Cupos actuales
+			datosCursosEntero[3,4,1,3] <- 28    // Cupos máximos
+			datosCursosCaracter[3,4,2,1] <- "ARQC4001" // Código de curso 2
+			datosCursosCaracter[3,4,2,2] <- "Diseño de interiores"
+			datosCursosCaracter[3,4,2,3] <- "DTEN1102" // Prerrequisito
+			datosCursosEntero[3,4,2,1] <- 4    // Créditos
+			datosCursosEntero[3,4,2,2] <- 0    // Cupos actuales
+			datosCursosEntero[3,4,2,3] <- 20    // Cupos máximos
 	
 	
 	//     VARIABLES AUXILIARES
