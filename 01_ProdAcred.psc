@@ -240,7 +240,7 @@ Algoritmo ProdAcred
 			datosCursosEntero[2,4,2,2] <- 0    // Cupos actuales
 			datosCursosEntero[2,4,2,3] <- 20    // Cupos máximos
 	// CARRERAS ARQUITECTURA (ID 3)
-			// Ciclo 1
+		// Ciclo 1
 			datosCursosCaracter[3,1,1,1] <- "MATG1001" // Código de curso 1
 			datosCursosCaracter[3,1,1,2] <- "Fundamentos matemáticos"
 			datosCursosCaracter[3,1,1,3] <- "0"    // Sin prerrequisito
@@ -253,7 +253,7 @@ Algoritmo ProdAcred
 			datosCursosEntero[3,1,2,1] <- 3    // Créditos
 			datosCursosEntero[3,1,2,2] <- 0    // Cupos actuales
 			datosCursosEntero[3,1,2,3] <- 40    // Cupos máximos
-			// Ciclo 2
+		// Ciclo 2
 			datosCursosCaracter[3,2,1,1] <- "CALC1011" // Código de curso 1
 			datosCursosCaracter[3,2,1,2] <- "Cálculo Diferencial"
 			datosCursosCaracter[3,2,1,3] <- "MATG1001" // Prerrequisito
@@ -266,7 +266,7 @@ Algoritmo ProdAcred
 			datosCursosEntero[3,2,2,1] <- 4    // Créditos
 			datosCursosEntero[3,2,2,2] <- 0    // Cupos actuales
 			datosCursosEntero[3,2,2,3] <- 30    // Cupos máximos
-			// Ciclo 3
+		// Ciclo 3
 			datosCursosCaracter[3,3,1,1] <- "CALC1012" // Código de curso 1
 			datosCursosCaracter[3,3,1,2] <- "Cálculo Integral"
 			datosCursosCaracter[3,3,1,3] <- "CALC1011"    // Prerrequisito
@@ -279,7 +279,7 @@ Algoritmo ProdAcred
 			datosCursosEntero[3,3,2,1] <- 3    // Créditos
 			datosCursosEntero[3,3,2,2] <- 0    // Cupos actuales
 			datosCursosEntero[3,3,2,3] <- 25    // Cupos máximos
-			// Ciclo 4
+		// Ciclo 4
 			datosCursosCaracter[3,4,1,1] <- "MATE4011" // Código de curso 1
 			datosCursosCaracter[3,4,1,2] <- "Análisis Real Avanzado"
 			datosCursosCaracter[3,4,1,3] <- "CALC1012" // Prerrequisito
