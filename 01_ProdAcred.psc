@@ -442,7 +442,7 @@ Algoritmo ProdAcred
 							Escribir "No se encontró ningún curso con el código proporcionado"
 						FinSi
 					De Otro Modo:
-						// No hace nada
+						// Volver al menú principal
 				FinSegun
 				
 				
@@ -456,6 +456,7 @@ Algoritmo ProdAcred
 				// 		VerificarMatricula() : Verificar prerequisitos y conflictos horarios 
 				// 		GenerarBoletaMatricula() : con costo total
 				Escribir "=== MATRÍCULA ==="
+				Escribir "Aún no implementado."
 				
 				
 				
@@ -470,6 +471,7 @@ Algoritmo ProdAcred
 				// Si hay beca o media beca descuento 100% o 50%.
 				// La condicion de becado es tambien parte de la info de cada estudiante
 				Escribir "=== PAGOS ==="
+				Escribir "Aún no implementado."
 				
 				
 				
@@ -481,6 +483,7 @@ Algoritmo ProdAcred
 				//		GenerarReporteEstudiante() : por estudiante, ingresando dni.
 				//		EstadísticasMatrícula(): por curso o por carrera
 				Escribir "=== REPORTES ACADÉMICOS ==="
+				Escribir "Aún no implementado."
 				
 				
 				
