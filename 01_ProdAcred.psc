@@ -16,10 +16,12 @@ FinFuncion
 Algoritmo ProdAcred
 	
 	//     DEFINICIONES BASE
-	Definir cantidadEstudiantes, cantidadCursos, cantidadCarreras Como Entero
-	cantidadEstudiantes <- 9
-	cantidadCursos <- 24
-	cantidadCarreras <- 3
+	Definir cantEstudiantes, cantCursosReg, cantCursosPorCiclo, cantCiclos, cantCarreras Como Entero
+	cantEstudiantes <- 9
+	cantCursosReg <- 24
+	cantCursosPorCiclo <- 10
+	cantCiclos <- 10
+	cantCarreras <- 3
 	
 	
 	//     "BASES DE DATOS" DE ESTUDIANTES
@@ -29,11 +31,11 @@ Algoritmo ProdAcred
 	Definir datosEstudiantesCaracter Como Caracter
 	Definir datosEstudiantesEntero Como Entero
 	Definir datosEstudiantesHorario Como Logico
-	Dimension datosEstudiantesCaracter[cantidadEstudiantes,2]
+	Dimension datosEstudiantesCaracter[cantEstudiantes,2]
 	// Los 2 espacios corresponden a CODIGO, NOMBRE
-	Dimension datosEstudiantesEntero[cantidadEstudiantes,2]
+	Dimension datosEstudiantesEntero[cantEstudiantes,2]
 	// Los 2 espacios corresponden a CARRERA (ID interno), CICLO
-	Dimension datosEstudiantesHorario[cantidadEstudiantes,6,18]
+	Dimension datosEstudiantesHorario[cantEstudiantes,6,18]
 	// Arreglo de booleanos lógicos (0 o 1) donde:
 	// 0 = Espacio vacío sin clases
 	// 1 = Espacio lleno con clases
@@ -63,7 +65,7 @@ Algoritmo ProdAcred
 	//     "BASE DE DATOS" DE CARRERA
 	// El ID interno de cada carrera será su posición en la 1ra dimensión
 	Definir nombreCarrera Como Caracter
-	Dimension nombreCarrera[cantidadCarreras]
+	Dimension nombreCarrera[cantCarreras]
 	
 	
 	//     "BASE DE DATOS" DE CURSOS
@@ -74,15 +76,15 @@ Algoritmo ProdAcred
 	// Cada carrera (1ra dimensión) tiene 10 ciclos.
 	Definir datosCursosCaracter Como Caracter
 	Definir datosCursosEntero Como Entero
-	Dimension datosCursosCaracter[cantidadCarreras,10,10,3]
+	Dimension datosCursosCaracter[cantCarreras,10,10,3]
 	// Los 2 espacios corresponden a CODIGO (ABCD-1001), NOMBRE, CÓDIGO PREREQUISITO (ABCD-1001)
-	Dimension datosCursosEntero[cantidadCarreras,10,10,3]
+	Dimension datosCursosEntero[cantCarreras,10,10,3]
 	// Los 3 espacios corresponden a CRÉDITOS, CUPOS ACTUALES, CUPOS MÁXIMOS
 	
 	
 	//     REGISTRO DE CURSOS POR ESTUDIANTE	
 	Definir datosEstudiantesCursos Como Logico
-	Dimension datosEstudiantesCursos[cantidadEstudiantes,10,10]
+	Dimension datosEstudiantesCursos[cantEstudiantes,10,10]
 	// Arreglo de booleanos lógicos (0 o 1) donde:
 	// 0 = No lleva el curso
 	// 1 = Sí lleva el curso
@@ -94,7 +96,6 @@ Algoritmo ProdAcred
 	nombreCarrera[1] <- "Ingeniería Civil"       // ID interno: 1
 	nombreCarrera[2] <- "Ingeniería de Sistemas" // ID interno: 2
 	nombreCarrera[3] <- "Arquitectura"           // ID interno: 3
-	
 	// ESTUDIANTES (ID 1 a 9)
 		datosEstudiantesCaracter[1,1] <- "231639H"  // Codigo
 		datosEstudiantesCaracter[1,2] <- "PISCOYA ENCAJIMA JOSE ALONSO"
@@ -132,7 +133,6 @@ Algoritmo ProdAcred
 		datosEstudiantesCaracter[9,2] <- "NUÑEZ RUBIO MAICOL JHORDY"
 		datosEstudiantesEntero[9,1] <- 3  // Arquitectura
 		datosEstudiantesEntero[9,2] <- 1  // Ciclo
-	
 	// CARRERAS ING. CIVIL (ID 1)
 		// Ciclo 1
 			datosCursosCaracter[1,1,1,1] <- "MATG1001" // Código de curso 1
@@ -335,7 +335,7 @@ Algoritmo ProdAcred
 					1:
 						// MOSTRAR LISTA DE ESTUDIANTES
 						Escribir "== LISTA DE ESTUDIANTES =="
-						Para i<-1 Hasta cantidadEstudiantes Hacer
+						Para i<-1 Hasta cantEstudiantes Hacer
 							Escribir i,". ", datosEstudiantesCaracter[i,2]
 							Escribir "    Código ",datosEstudiantesCaracter[i,1],", " Sin Saltar
 							Escribir nombreCarrera[datosEstudiantesEntero[i,1]],", ciclo ",datosEstudiantesEntero[i,2]
@@ -343,24 +343,24 @@ Algoritmo ProdAcred
 						FinPara
 					2:
 						// REGISTRAR NUEVO ESTUDIANTE
-						cantidadEstudiantes <- cantidadEstudiantes +1
+						cantEstudiantes <- cantEstudiantes +1
 						// Redimensionar todos los arreglos que dependan de la cantidad de estudiantes
-						Redimension datosEstudiantesCaracter[cantidadEstudiantes,2]
-						Redimension datosEstudiantesEntero[cantidadEstudiantes,2]
-						Redimension datosEstudiantesHorario[cantidadEstudiantes,6,18]
-						Redimension datosEstudiantesCursos[cantidadEstudiantes,10,10]
+						Redimension datosEstudiantesCaracter[cantEstudiantes,2]
+						Redimension datosEstudiantesEntero[cantEstudiantes,2]
+						Redimension datosEstudiantesHorario[cantEstudiantes,6,18]
+						Redimension datosEstudiantesCursos[cantEstudiantes,10,10]
 						// Leer información del nuevo estudiante
 						Escribir "Ingrese el código del estudiante nuevo:"
-						Leer datosEstudiantesCaracter[cantidadEstudiantes,1]
+						Leer datosEstudiantesCaracter[cantEstudiantes,1]
 						Escribir "Ingrese los apellidos y nombres (en ese orden, en mayúsculas) del estudiante nuevo:"
-						Leer datosEstudiantesCaracter[cantidadEstudiantes,2]
+						Leer datosEstudiantesCaracter[cantEstudiantes,2]
 						Escribir "Elija la carrera del estudiante nuevo:"
-						Para i<-1 Hasta cantidadCarreras Hacer
+						Para i<-1 Hasta cantCarreras Hacer
 							Escribir i,". ",nombreCarrera[i]
 						FinPara
-						datosEstudiantesEntero[cantidadEstudiantes,1] <- IngresarEnteroValido(1,cantidadCarreras)
+						datosEstudiantesEntero[cantEstudiantes,1] <- IngresarEnteroValido(1,cantCarreras)
 						Escribir "Ingrese el ciclo en que se encuentra, del 1 al 10."
-						datosEstudiantesEntero[cantidadEstudiantes,2] <- IngresarEnteroValido(1,10)
+						datosEstudiantesEntero[cantEstudiantes,2] <- IngresarEnteroValido(1,10)
 						
 						// Confirmar registro de estudiante
 						Escribir "Estudiante registrado correctamente."
@@ -369,7 +369,7 @@ Algoritmo ProdAcred
 						Escribir "Ingrese el código exacto (de la forma 256789A) del estudiante a buscar:"
 						idEstudianteBuscar <- 0
 						Leer codigoEstudianteBuscar
-						Para i<-1 Hasta cantidadEstudiantes Hacer
+						Para i<-1 Hasta cantEstudiantes Hacer
 							Si datosEstudiantesCaracter[i,1] = codigoEstudianteBuscar Entonces
 								idEstudianteBuscar <- i
 							FinSi
@@ -401,7 +401,7 @@ Algoritmo ProdAcred
 								3:
 									// Actualizar carrera
 									Escribir "Elija la carrera actualizada del estudiante:"
-									Para j<-1 Hasta cantidadCarreras Hacer
+									Para j<-1 Hasta cantCarreras Hacer
 										Escribir j,". ",nombreCarrera[j]
 									FinPara
 									datosEstudiantesEntero[idEstudianteBuscar,1] <- IngresarEnteroValido(1,3)
@@ -433,10 +433,10 @@ Algoritmo ProdAcred
 					1:
 						// LISTA DE CURSOS POR CARRERA Y CICLO
 						Escribir "Elija la carrera de los cursos a mostrar:"
-						Para i<-1 Hasta cantidadCarreras Hacer
+						Para i<-1 Hasta cantCarreras Hacer
 							Escribir i,". ",nombreCarrera[i]
 						FinPara
-						cursoCarreraSeleccionado <- IngresarEnteroValido(1,cantidadCarreras)
+						cursoCarreraSeleccionado <- IngresarEnteroValido(1,cantCarreras)
 						Escribir "Ingrese el ciclo, del 1 al 10, de los cursos a mostrar:"
 						cursoCicloSeleccionado <- IngresarEnteroValido(1,10)
 						Para i<-1 Hasta 10 Hacer
@@ -456,10 +456,10 @@ Algoritmo ProdAcred
 					2:
 						// REGISTRAR UN NUEVO CURSO
 						Escribir "Elija la carrera a la que se va a agregar el curso:"
-						Para i<-1 Hasta cantidadCarreras Hacer
+						Para i<-1 Hasta cantCarreras Hacer
 							Escribir i,". ",nombreCarrera[i]
 						FinPara
-						cursoCarreraSeleccionado <- IngresarEnteroValido(1,cantidadCarreras)
+						cursoCarreraSeleccionado <- IngresarEnteroValido(1,cantCarreras)
 						Escribir "Ingrese el ciclo, del 1 al 10, al que se va a agregar el curso:"
 						cursoCicloSeleccionado <- IngresarEnteroValido(1,10)
 						// Asignar ID interno del nuevo curso
@@ -483,6 +483,7 @@ Algoritmo ProdAcred
 							datosCursosEntero[cursoCarreraSeleccionado,cursoCicloSeleccionado,idNuevoCurso,2] <- 0
 							Escribir "Ingrese el número de cupos máximos, de 10 a 60:"
 							datosCursosEntero[cursoCarreraSeleccionado,cursoCicloSeleccionado,idNuevoCurso,3] <- IngresarEnteroValido(10,60)
+							cantCursosReg <- cantCursosReg +1
 							Escribir "Curso registrado correctamente."
 						FinSi
 					3:
@@ -492,7 +493,7 @@ Algoritmo ProdAcred
 						// Restablecer contador de búsqueda
 						cursoCantidadBusq <- 0
 						Escribir "Resultados de búsqueda:"
-						Para i<-1 Hasta cantidadCarreras Hacer // Busca cada carrera
+						Para i<-1 Hasta cantCarreras Hacer // Busca cada carrera
 							Para j<-1 Hasta 10 Hacer           // Busca cada ciclo
 								Para k<-1 Hasta 10 Hacer       // Busca cada espacio de los 10 max. de cursos.
 									Si datosCursosCaracter[i,j,k,1] = cursoCodigoBuscar Entonces
