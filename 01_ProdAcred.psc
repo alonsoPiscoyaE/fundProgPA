@@ -10,12 +10,12 @@ Funcion valorVerificado <- IngresarEnteroValido(limInf,limSup)
 	valorVerificado <- valorIngresado
 FinFuncion
 
-Funcion teclaContinuar
-	// FUNCION QUE PIDE PRESIONAR UNA TECLA ANTES DE CONTINUAR
+SubProceso teclaContinuar
+	// SUBPROCESO QUE PIDE PRESIONAR UNA TECLA ANTES DE CONTINUAR
 	//     PARA PODER LEER LA INFORMACIÓN EN PANTALLA
 	Escribir "Presione cualquier tecla para para continuar."
 	Esperar Tecla
-FinFuncion
+FinSubProceso
 
 
 
@@ -41,7 +41,7 @@ Algoritmo ProdAcred
 	Dimension datosEstudiantesCaracter[cantEstudiantes,2]
 	// Los 2 espacios corresponden a CODIGO, NOMBRE
 	Dimension datosEstudiantesEntero[cantEstudiantes,5]
-	// Los 2 espacios corresponden a CARRERA (ID interno), CICLO, ESTADO DE BECA, ESTADO DE PAGO, ESTADO DE MATRÍCULA
+	// Los 5 espacios corresponden a CARRERA (ID interno), CICLO, ESTADO DE BECA, ESTADO DE PAGO, ESTADO DE MATRÍCULA
 	// ESTADO DE BECA:
 	//    0: Sin beca
 	//    1: Media beca
@@ -94,7 +94,7 @@ Algoritmo ProdAcred
 	Definir datosCursosCaracter Como Caracter
 	Definir datosCursosEntero Como Entero
 	Dimension datosCursosCaracter[cantCarreras,cantCiclos,cantCursosPorCiclo,3]
-	// Los 2 espacios corresponden a CODIGO (ABCD-1001), NOMBRE, CÓDIGO PREREQUISITO (ABCD-1001)
+	// Los 3 espacios corresponden a CODIGO (ABCD-1001), NOMBRE, CÓDIGO PREREQUISITO (ABCD-1001)
 	Dimension datosCursosEntero[cantCarreras,cantCiclos,cantCursosPorCiclo,3]
 	// Los 3 espacios corresponden a CRÉDITOS, CUPOS ACTUALES, CUPOS MÁXIMOS
 	
@@ -503,8 +503,9 @@ Algoritmo ProdAcred
 						FinPara
 						cursoCarreraSeleccionado <- IngresarEnteroValido(1,cantCarreras)
 						Escribir "Ingrese el ciclo, del 1 al ",cantCiclos," de los cursos a mostrar, o ingrese ",cantCiclos +1, " para mostrar cursos de todos los ciclos:" 
-						cursoCicloSeleccionado <- IngresarEnteroValido(0,cantCiclos+1)
+						cursoCicloSeleccionado <- IngresarEnteroValido(1,cantCiclos+1)
 						Si cursoCicloSeleccionado = cantCiclos +1 Entonces
+							// Mostrar cursos de TODOS los ciclos
 							Para i<-1 Hasta cantCiclos Hacer
 								Escribir "CICLO ",i,":"
 								Para j<-1 Hasta cantCursosPorCiclo Hacer
@@ -523,6 +524,7 @@ Algoritmo ProdAcred
 								FinPara
 							FinPara
 						SiNo
+							// Mostrar solo cursos del ciclo seleccionado
 							Escribir "CICLO ",cursoCicloSeleccionado,":"
 							Para j<-1 Hasta cantCursosPorCiclo Hacer
 								Si datosCursosCaracter[cursoCarreraSeleccionado,cursoCicloSeleccionado,j,1] <> "" Entonces
@@ -585,7 +587,7 @@ Algoritmo ProdAcred
 						Escribir "Resultados de búsqueda:"
 						Para i<-1 Hasta cantCarreras Hacer // Busca cada carrera
 							Para j<-1 Hasta cantCiclos Hacer // Busca cada ciclo
-								Para k<-1 Hasta cantCursosPorCiclo Hacer // Busca cada espacio de los cursos.
+								Para k<-1 Hasta cantCursosPorCiclo Hacer // Busca cada espacio de los ciclos.
 									Si datosCursosCaracter[i,j,k,1] = cursoCodigoBuscar Entonces
 										// Imprimir curso
 										Escribir datosCursosCaracter[i,j,k,1],": ",datosCursosCaracter[i,j,k,2]
@@ -659,8 +661,8 @@ Algoritmo ProdAcred
 					1:
 						// BUSCAR Y/O ACTUALIZAR INFORMACIÓN DE ESTUDIANTE
 						Escribir "Ingrese el código exacto (de la forma 256789A) del estudiante a registrar:"
-						idEstudianteBuscar <- 0
 						Leer codigoEstudianteBuscar
+						idEstudianteBuscar <- 0
 						Para i<-1 Hasta cantEstudiantes Hacer
 							Si datosEstudiantesCaracter[i,1] = codigoEstudianteBuscar Entonces
 								idEstudianteBuscar <- i
