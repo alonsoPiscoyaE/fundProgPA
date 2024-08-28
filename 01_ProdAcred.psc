@@ -387,7 +387,7 @@ Algoritmo ProdAcred
 						cantEstudiantes <- cantEstudiantes +1
 						// Redimensionar todos los arreglos que dependan de la cantidad de estudiantes
 						Redimension datosEstudiantesCaracter[cantEstudiantes,2]
-						Redimension datosEstudiantesEntero[cantEstudiantes,2]
+						Redimension datosEstudiantesEntero[cantEstudiantes,5]
 						Redimension datosEstudiantesHorario[cantEstudiantes,6,18]
 						Redimension datosEstudiantesCursos[cantEstudiantes,cantCiclos,cantCursosPorCiclo]
 						// Leer información del nuevo estudiante
@@ -766,12 +766,61 @@ Algoritmo ProdAcred
 				Leer accionMenu
 				Segun accionMenu Hacer
 					1:
+						Escribir "Ingrese el código exacto (de la forma 256789A) del estudiante a matricular:"
+						idEstudianteBuscar <- 0
+						Leer codigoEstudianteBuscar
+						Para i<-1 Hasta cantEstudiantes Hacer
+							Si datosEstudiantesCaracter[i,1] = codigoEstudianteBuscar Entonces
+								idEstudianteBuscar <- i
+							FinSi
+						FinPara
+						Si idEstudianteBuscar = 0 Entonces
+							Escribir "No se encontró un estudiante con ese código exacto."
+						SiNo
+							Escribir "Se encontró al estudiante:"
+							Escribir "  ",datosEstudiantesCaracter[idEstudianteBuscar,2]
+							Escribir "    Código ",datosEstudiantesCaracter[idEstudianteBuscar,1],", " Sin Saltar
+							Escribir nombreCarrera[datosEstudiantesEntero[idEstudianteBuscar,1]],", ciclo ",datosEstudiantesEntero[idEstudianteBuscar,2]
+							Segun datosEstudiantesEntero[idEstudianteBuscar,3] Hacer
+								0:
+									Escribir "    Sin beca."
+								1:
+									Escribir "    Media beca."
+								2:
+									Escribir "    Beca completa."
+							FinSegun
+							// Verificar si ya está matriculado
+							Si datosEstudiantesEntero[idEstudianteBuscar,5] = 1 Entonces
+								Escribir "El estudiante ya está matriculado."
+							SiNo
+								// Proceder a la matrícula
+								
+							FinSi
+						FinSi
 						teclaContinuar
 						
 					2:
+						Escribir "== ESTUDIANTES MATRICULADOS =="
+						Para i <- 1 Hasta cantEstudiantes Hacer
+							Si datosEstudiantesEntero[i,5] = 1 Entonces
+								Escribir "  ",datosEstudiantesCaracter[i,2]
+								Escribir "    Código ",datosEstudiantesCaracter[i,1],", " Sin Saltar
+								Escribir nombreCarrera[datosEstudiantesEntero[i,1]],", ciclo ",datosEstudiantesEntero[i,2]
+								Escribir ""
+							FinSi
+						FinPara
 						teclaContinuar
 						
 					3:
+						Escribir "== ESTUDIANTES SIN MATRICULAR =="
+						Para i <- 1 Hasta cantEstudiantes Hacer
+							Si datosEstudiantesEntero[i,5] = 0 Entonces
+								Escribir "  ",datosEstudiantesCaracter[i,2]
+								Escribir "    Código ",datosEstudiantesCaracter[i,1],", " Sin Saltar
+								Escribir nombreCarrera[datosEstudiantesEntero[i,1]],", ciclo ",datosEstudiantesEntero[i,2]
+								Escribir ""
+							FinSi
+						FinPara
 						teclaContinuar
 						
 					De Otro Modo:
