@@ -381,6 +381,7 @@ Algoritmo ProdAcred
 							Escribir ""
 						FinPara
 						teclaContinuar
+						
 					2:
 						// REGISTRAR NUEVO ESTUDIANTE
 						cantEstudiantes <- cantEstudiantes +1
@@ -410,6 +411,7 @@ Algoritmo ProdAcred
 						// Confirmar registro de estudiante
 						Escribir "Estudiante registrado correctamente."
 						teclaContinuar
+						
 					3:
 						// BUSCAR Y/O ACTUALIZAR INFORMACIÓN DE ESTUDIANTE
 						Escribir "Ingrese el código exacto (de la forma 256789A) del estudiante a buscar:"
@@ -537,8 +539,8 @@ Algoritmo ProdAcred
 								FinSi
 							FinPara
 						FinSi
-						
 						teclaContinuar
+						
 					2:
 						// REGISTRAR UN NUEVO CURSO
 						Escribir "Elija la carrera a la que se va a agregar el curso:"
@@ -573,6 +575,7 @@ Algoritmo ProdAcred
 							Escribir "Curso registrado correctamente."
 						FinSi
 						teclaContinuar
+						
 					3:
 						// BUSCAR CURSO Y/O ACTUALIZAR INFORMACIÓN
 						Escribir "Ingrese el código exacto del curso a buscar (de la forma ABCD1001):"
@@ -646,7 +649,7 @@ Algoritmo ProdAcred
 				
 			3:
 				// GESTIÓN DE PAGOS
-				Escribir "=== PAGOS ==="
+				Escribir "=== GESTION DE PAGOS ==="
 				Escribir "1. Registrar pago para matrícula de un estudiante."
 				Escribir "2. Mostrar lista de estudiantes con pagos completados."
 				Escribir "3. Mostrar lista de estudiantes con pagos pendientes."
@@ -756,8 +759,24 @@ Algoritmo ProdAcred
 				// 		VerificarMatricula() : Verificar prerequisitos y conflictos horarios 
 				// 		GenerarBoletaMatricula() : con costo total
 				Escribir "=== MATRÍCULA ==="
-				Escribir "Aún no implementado."
-				teclaContinuar
+				Escribir "1. Registrar matrícula de un estudiante."
+				Escribir "2. Mostrar lista de estudiantes matriculados."
+				Escribir "3. Mostrar lista de estudiantes sin matricular."
+				Escribir "(otro número). Volver al menú principal."
+				Leer accionMenu
+				Segun accionMenu Hacer
+					1:
+						teclaContinuar
+						
+					2:
+						teclaContinuar
+						
+					3:
+						teclaContinuar
+						
+					De Otro Modo:
+						//Volver al menú principal
+				FinSegun
 				
 				
 				
