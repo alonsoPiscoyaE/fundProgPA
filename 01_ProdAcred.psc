@@ -10,6 +10,14 @@ Funcion valorVerificado <- IngresarEnteroValido(limInf,limSup)
 	valorVerificado <- valorIngresado
 FinFuncion
 
+Funcion teclaContinuar
+	// FUNCION QUE PIDE INGRESAR ENTER ANTES DE CONTINUAR
+	//     PARA PODER LEER LA INFORMACIÓN EN PANTALLA
+	Definir cadenaIngresada Como Caracter
+	Escribir "Ingrese ENTER para continuar."
+	Leer cadenaIngresada
+FinFuncion
+
 
 
 // ALGORITMO PRINCIPAL
@@ -33,8 +41,11 @@ Algoritmo ProdAcred
 	Definir datosEstudiantesHorario Como Logico
 	Dimension datosEstudiantesCaracter[cantEstudiantes,2]
 	// Los 2 espacios corresponden a CODIGO, NOMBRE
-	Dimension datosEstudiantesEntero[cantEstudiantes,2]
-	// Los 2 espacios corresponden a CARRERA (ID interno), CICLO
+	Dimension datosEstudiantesEntero[cantEstudiantes,3]
+	// Los 2 espacios corresponden a CARRERA (ID interno), CICLO, ESTADO DE BECA
+	//    0: Sin beca
+	//    1: Media beca
+	//    2: Beca completa
 	Dimension datosEstudiantesHorario[cantEstudiantes,6,18]
 	// Arreglo de booleanos lógicos (0 o 1) donde:
 	// 0 = Espacio vacío sin clases
@@ -101,38 +112,47 @@ Algoritmo ProdAcred
 		datosEstudiantesCaracter[1,2] <- "PISCOYA ENCAJIMA JOSE ALONSO"
 		datosEstudiantesEntero[1,1] <- 2  // Sistemas
 		datosEstudiantesEntero[1,2] <- 9  // Ciclo
+		datosEstudiantesEntero[1,3] <- 2  // Beca completa
 		datosEstudiantesCaracter[2,1] <- "231645H"  // Codigo
 		datosEstudiantesCaracter[2,2] <- "VILLEGAS CUENCA JOSE MANUEL"
 		datosEstudiantesEntero[2,1] <- 2  // Sistemas
 		datosEstudiantesEntero[2,2] <- 8  // Ciclo
+		datosEstudiantesEntero[2,3] <- 1  // Media beca
 		datosEstudiantesCaracter[3,1] <- "231625G"  // Codigo
 		datosEstudiantesCaracter[3,2] <- "CAUCHOS LABAN NELSON ANIBAL"
 		datosEstudiantesEntero[3,1] <- 2  // Sistemas
 		datosEstudiantesEntero[3,2] <- 7  // Ciclo
+		datosEstudiantesEntero[3,3] <- 1  // Media beca
 		datosEstudiantesCaracter[4,1] <- "231624K"  // Codigo
 		datosEstudiantesCaracter[4,2] <- "CASTRO MENDOZA JHORDY FABRICIO"
 		datosEstudiantesEntero[4,1] <- 1  // Civil
 		datosEstudiantesEntero[4,2] <- 6  // Ciclo
+		datosEstudiantesEntero[4,3] <- 2  // Beca completa
 		datosEstudiantesCaracter[5,1] <- "231620E"  // Codigo
 		datosEstudiantesCaracter[5,2] <- "BARRERA ALVARADO HENRY CRISTIAN"
 		datosEstudiantesEntero[5,1] <- 1  // Civil
 		datosEstudiantesEntero[5,2] <- 4  // Ciclo
+		datosEstudiantesEntero[5,3] <- 1  // Media beca
 		datosEstudiantesCaracter[6,1] <- "231640F"  // Codigo
 		datosEstudiantesCaracter[6,2] <- "QUISPE CABEZAS JUAN DE DIOS"
 		datosEstudiantesEntero[6,1] <- 1  // Civil
 		datosEstudiantesEntero[6,2] <- 2  // Ciclo
+		datosEstudiantesEntero[6,3] <- 0  // Sin beca
 		datosEstudiantesCaracter[7,1] <- "231638A"  // Codigo
 		datosEstudiantesCaracter[7,2] <- "PAREDES AGUINAGA JOSUE SAMUEL"
 		datosEstudiantesEntero[7,1] <- 3  // Arquitectura
 		datosEstudiantesEntero[7,2] <- 5  // Ciclo
+		datosEstudiantesEntero[7,3] <- 2  // Beca completa
 		datosEstudiantesCaracter[8,1] <- "231631G"  // Codigo
 		datosEstudiantesCaracter[8,2] <- "LOZANO PAZ ABIMA GALILEY"
 		datosEstudiantesEntero[8,1] <- 3  // Arquitectura
 		datosEstudiantesEntero[8,2] <- 3  // Ciclo
+		datosEstudiantesEntero[8,3] <- 0  // Sin becas
 		datosEstudiantesCaracter[9,1] <- "231636I"  // Codigo
 		datosEstudiantesCaracter[9,2] <- "NUÑEZ RUBIO MAICOL JHORDY"
 		datosEstudiantesEntero[9,1] <- 3  // Arquitectura
 		datosEstudiantesEntero[9,2] <- 1  // Ciclo
+		datosEstudiantesEntero[9,3] <- 0  // Sin becas
 	// CARRERAS ING. CIVIL (ID 1)
 		// Ciclo 1
 			datosCursosCaracter[1,1,1,1] <- "MATG1001" // Código de curso 1
@@ -312,6 +332,7 @@ Algoritmo ProdAcred
 	// MENU PRINCIPAL, recursivo hasta que verifSalirPrograma lo detenga
 	Definir accionMenu Como Real
 	Repetir
+		Limpiar Pantalla
 		Escribir "================================================"
 		Escribir " BIENVENIDO AL SISTEMA DE GESTIÓN DE MATRÍCULA. "
 		Escribir "================================================"
@@ -339,8 +360,17 @@ Algoritmo ProdAcred
 							Escribir i,". ", datosEstudiantesCaracter[i,2]
 							Escribir "    Código ",datosEstudiantesCaracter[i,1],", " Sin Saltar
 							Escribir nombreCarrera[datosEstudiantesEntero[i,1]],", ciclo ",datosEstudiantesEntero[i,2]
+							Segun datosEstudiantesEntero[i,3] Hacer
+								0:
+									Escribir "    Sin beca."
+								1:
+									Escribir "    Media beca."
+								2:
+									Escribir "    Beca completa."
+							FinSegun
 							Escribir ""
 						FinPara
+						teclaContinuar
 					2:
 						// REGISTRAR NUEVO ESTUDIANTE
 						cantEstudiantes <- cantEstudiantes +1
@@ -364,6 +394,7 @@ Algoritmo ProdAcred
 						
 						// Confirmar registro de estudiante
 						Escribir "Estudiante registrado correctamente."
+						teclaContinuar
 					3:
 						// BUSCAR Y/O ACTUALIZAR INFORMACIÓN DE ESTUDIANTE
 						Escribir "Ingrese el código exacto (de la forma 256789A) del estudiante a buscar:"
@@ -413,6 +444,7 @@ Algoritmo ProdAcred
 									// Volver al menú principal
 							FinSegun
 						FinSi
+						teclaContinuar
 					De Otro Modo:
 						// Volver al menú principal
 				FinSegun
@@ -437,22 +469,45 @@ Algoritmo ProdAcred
 							Escribir i,". ",nombreCarrera[i]
 						FinPara
 						cursoCarreraSeleccionado <- IngresarEnteroValido(1,cantCarreras)
-						Escribir "Ingrese el ciclo, del 1 al ",cantCiclos," de los cursos a mostrar:"
-						cursoCicloSeleccionado <- IngresarEnteroValido(1,cantCiclos)
-						Para i<-1 Hasta cantCursosPorCiclo Hacer
-							Si datosCursosCaracter[cursoCarreraSeleccionado,cursoCicloSeleccionado,i,1] <> "" Entonces
-								// Imprimir curso
-								Escribir "Curso ",i,": ",datosCursosCaracter[cursoCarreraSeleccionado,cursoCicloSeleccionado,i,2]
-								Escribir "    Código ",datosCursosCaracter[cursoCarreraSeleccionado,cursoCicloSeleccionado,i,1]
-								Si datosCursosCaracter[cursoCarreraSeleccionado,cursoCicloSeleccionado,i,3] = "0" Entonces
-									Escribir "    No tiene prerequisitos."
-								SiNo
-									Escribir "    Prerequisito: ", datosCursosCaracter[cursoCarreraSeleccionado,cursoCicloSeleccionado,i,3] 
+						Escribir "Ingrese el ciclo, del 1 al ",cantCiclos," de los cursos a mostrar, o ingrese ",cantCiclos +1, " para mostrar cursos de todos los ciclos:" 
+						cursoCicloSeleccionado <- IngresarEnteroValido(0,cantCiclos+1)
+						Si cursoCicloSeleccionado = cantCiclos +1 Entonces
+							Para i<-1 Hasta cantCiclos Hacer
+								Escribir "CICLO ",i,":"
+								Para j<-1 Hasta cantCursosPorCiclo Hacer
+									Si datosCursosCaracter[cursoCarreraSeleccionado,i,j,1] <> "" Entonces
+										// Imprimir curso
+										Escribir "    Curso ",j,": ",datosCursosCaracter[cursoCarreraSeleccionado,i,j,2]
+										Escribir "        Código ",datosCursosCaracter[cursoCarreraSeleccionado,i,j,1]
+										Si datosCursosCaracter[cursoCarreraSeleccionado,i,j,3] = "0" Entonces
+											Escribir "        No tiene prerequisitos."
+										SiNo
+											Escribir "        Prerequisito: ", datosCursosCaracter[cursoCarreraSeleccionado,i,j,3] 
+										FinSi
+										Escribir "        Créditos: ",datosCursosEntero[cursoCarreraSeleccionado,i,j,1]
+										Escribir "        Cupos: ",datosCursosEntero[cursoCarreraSeleccionado,i,j,2]," de ",datosCursosEntero[cursoCarreraSeleccionado,i,j,3]
+									FinSi
+								FinPara
+							FinPara
+						SiNo
+							Escribir "CICLO ",cursoCicloSeleccionado,":"
+							Para j<-1 Hasta cantCursosPorCiclo Hacer
+								Si datosCursosCaracter[cursoCarreraSeleccionado,cursoCicloSeleccionado,j,1] <> "" Entonces
+									// Imprimir curso
+									Escribir "    Curso ",j,": ",datosCursosCaracter[cursoCarreraSeleccionado,cursoCicloSeleccionado,j,2]
+									Escribir "        Código ",datosCursosCaracter[cursoCarreraSeleccionado,cursoCicloSeleccionado,j,1]
+									Si datosCursosCaracter[cursoCarreraSeleccionado,cursoCicloSeleccionado,j,3] = "0" Entonces
+										Escribir "        No tiene prerequisitos."
+									SiNo
+										Escribir "        Prerequisito: ", datosCursosCaracter[cursoCarreraSeleccionado,cursoCicloSeleccionado,j,3] 
+									FinSi
+									Escribir "        Créditos: ",datosCursosEntero[cursoCarreraSeleccionado,cursoCicloSeleccionado,j,1]
+									Escribir "        Cupos: ",datosCursosEntero[cursoCarreraSeleccionado,cursoCicloSeleccionado,j,2]," de ",datosCursosEntero[cursoCarreraSeleccionado,cursoCicloSeleccionado,j,3]
 								FinSi
-								Escribir "    Créditos: ",datosCursosEntero[cursoCarreraSeleccionado,cursoCicloSeleccionado,i,1]
-								Escribir "    Cupos: ",datosCursosEntero[cursoCarreraSeleccionado,cursoCicloSeleccionado,i,2]," de ",datosCursosEntero[cursoCarreraSeleccionado,cursoCicloSeleccionado,i,3]
-							FinSi
-						FinPara
+							FinPara
+						FinSi
+						
+						teclaContinuar
 					2:
 						// REGISTRAR UN NUEVO CURSO
 						Escribir "Elija la carrera a la que se va a agregar el curso:"
@@ -486,6 +541,7 @@ Algoritmo ProdAcred
 							cantCursosReg <- cantCursosReg +1
 							Escribir "Curso registrado correctamente."
 						FinSi
+						teclaContinuar
 					3:
 						// BUSCAR CURSO Y/O ACTUALIZAR INFORMACIÓN
 						Escribir "Ingrese el código exacto del curso a buscar (de la forma ABCD1001):"
@@ -548,6 +604,7 @@ Algoritmo ProdAcred
 						Si cursoCantidadBusq <- 0 Entonces
 							Escribir "No se encontró ningún curso con el código proporcionado"
 						FinSi
+						teclaContinuar
 					De Otro Modo:
 						// Volver al menú principal
 				FinSegun
@@ -564,6 +621,7 @@ Algoritmo ProdAcred
 				// 		GenerarBoletaMatricula() : con costo total
 				Escribir "=== MATRÍCULA ==="
 				Escribir "Aún no implementado."
+				teclaContinuar
 				
 				
 				
@@ -579,6 +637,7 @@ Algoritmo ProdAcred
 				// La condicion de becado es tambien parte de la info de cada estudiante
 				Escribir "=== PAGOS ==="
 				Escribir "Aún no implementado."
+				teclaContinuar
 				
 				
 				
@@ -591,6 +650,7 @@ Algoritmo ProdAcred
 				//		EstadísticasMatrícula(): por curso o por carrera
 				Escribir "=== REPORTES ACADÉMICOS ==="
 				Escribir "Aún no implementado."
+				teclaContinuar
 				
 				
 				
