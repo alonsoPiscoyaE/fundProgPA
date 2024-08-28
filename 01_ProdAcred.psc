@@ -11,11 +11,10 @@ Funcion valorVerificado <- IngresarEnteroValido(limInf,limSup)
 FinFuncion
 
 Funcion teclaContinuar
-	// FUNCION QUE PIDE INGRESAR ENTER ANTES DE CONTINUAR
+	// FUNCION QUE PIDE PRESIONAR UNA TECLA ANTES DE CONTINUAR
 	//     PARA PODER LEER LA INFORMACIÓN EN PANTALLA
-	Definir cadenaIngresada Como Caracter
-	Escribir "Ingrese ENTER para continuar."
-	Leer cadenaIngresada
+	Escribir "Presione cualquier tecla para para continuar."
+	Esperar Tecla
 FinFuncion
 
 
@@ -41,11 +40,18 @@ Algoritmo ProdAcred
 	Definir datosEstudiantesHorario Como Logico
 	Dimension datosEstudiantesCaracter[cantEstudiantes,2]
 	// Los 2 espacios corresponden a CODIGO, NOMBRE
-	Dimension datosEstudiantesEntero[cantEstudiantes,3]
-	// Los 2 espacios corresponden a CARRERA (ID interno), CICLO, ESTADO DE BECA
+	Dimension datosEstudiantesEntero[cantEstudiantes,5]
+	// Los 2 espacios corresponden a CARRERA (ID interno), CICLO, ESTADO DE BECA, ESTADO DE PAGO, ESTADO DE MATRÍCULA
+	// ESTADO DE BECA:
 	//    0: Sin beca
 	//    1: Media beca
 	//    2: Beca completa
+	// ESTADO DE PAGO:
+	//    0: No pagó
+	//    1: Ya pagó (y puede matricularse)
+	// ESTADO DE MATRÍCULA
+	//    0: No matriculado
+	//    1: Ya matriculado
 	Dimension datosEstudiantesHorario[cantEstudiantes,6,18]
 	// Arreglo de booleanos lógicos (0 o 1) donde:
 	// 0 = Espacio vacío sin clases
@@ -315,12 +321,16 @@ Algoritmo ProdAcred
 	
 	
 	//     VARIABLES AUXILIARES
-	// GESTION ESTUDIANTES
+	// GESTION ESTUDIANTES y PAGOS
 	Definir codigoEstudianteBuscar Como Caracter
 	Definir idEstudianteBuscar Como Entero
 	// GESTION CURSOS
 	Definir cursoCodigoBuscar Como Caracter
 	Definir cursoCarreraSeleccionado, cursoCicloSeleccionado, idCursoNuevo, cursoCantidadBusq Como Entero
+	// GESTION PAGOS
+	Definir montoMatricBase, nroCursosDesaprob, costoCursoDesaprob, montoPagar Como Real
+	montoMatricBase <- 20
+	costoCursoDesaprob <- 20
 	// SALIR DEL PROGRAMA
 	Definir verifSalirPrograma Como Real
 	verifSalirPrograma <- 1
@@ -332,14 +342,14 @@ Algoritmo ProdAcred
 	// MENU PRINCIPAL, recursivo hasta que verifSalirPrograma lo detenga
 	Definir accionMenu Como Real
 	Repetir
-		Limpiar Pantalla
+		Borrar Pantalla
 		Escribir "================================================"
 		Escribir " BIENVENIDO AL SISTEMA DE GESTIÓN DE MATRÍCULA. "
 		Escribir "================================================"
 		Escribir "1. Gestión de Estudiantes."
 		Escribir "2. Gestión de Cursos."
-		Escribir "3. Proceso de matrícula."
-		Escribir "4. Gestión de Pagos."
+		Escribir "3. Gestión de Pagos."
+		Escribir "4. Proceso de matrícula."
 		Escribir "5. Reportes Académicos."
 		Escribir "6. Salir del programa."
 		Leer accionMenu
@@ -391,6 +401,11 @@ Algoritmo ProdAcred
 						datosEstudiantesEntero[cantEstudiantes,1] <- IngresarEnteroValido(1,cantCarreras)
 						Escribir "Ingrese el ciclo en que se encuentra, del 1 al ",cantCiclos,"."
 						datosEstudiantesEntero[cantEstudiantes,2] <- IngresarEnteroValido(1,cantCiclos)
+						Escribir "Elija una opción respecto a la condición del estudiante:"
+						Escribir "0. No becado."
+						Escribir "1. Con media beca."
+						Escribir "2. Con beca completa."
+						datosEstudiantesEntero[cantEstudiantes,3] <- IngresarEnteroValido(0,2)
 						
 						// Confirmar registro de estudiante
 						Escribir "Estudiante registrado correctamente."
@@ -409,15 +424,24 @@ Algoritmo ProdAcred
 							Escribir "No se encontró un estudiante con ese código exacto."
 						SiNo
 							Escribir "Se encontró al estudiante:"
-							Escribir idEstudianteBuscar,". ", datosEstudiantesCaracter[idEstudianteBuscar,2]
+							Escribir "  ",datosEstudiantesCaracter[idEstudianteBuscar,2]
 							Escribir "    Código ",datosEstudiantesCaracter[idEstudianteBuscar,1],", " Sin Saltar
 							Escribir nombreCarrera[datosEstudiantesEntero[idEstudianteBuscar,1]],", ciclo ",datosEstudiantesEntero[idEstudianteBuscar,2]
+							Segun datosEstudiantesEntero[idEstudianteBuscar,3] Hacer
+								0:
+									Escribir "    Sin beca."
+								1:
+									Escribir "    Media beca."
+								2:
+									Escribir "    Beca completa."
+							FinSegun
 							// Proceder a la actualización de un valor
 							Escribir "¿Desea actualizar la información de este estudiante?"
 							Escribir "1. Código"
 							Escribir "2. Apellidos y nombres"
 							Escribir "3. Carrera"
 							Escribir "4. Ciclo"
+							Escribir "5. Condición de beca"
 							Escribir "(otro número). No actualizar nada."
 							Leer accionMenu
 							Segun accionMenu Hacer
@@ -440,6 +464,13 @@ Algoritmo ProdAcred
 									// Actualizar ciclo
 									Escribir "Ingrese el ciclo actualizado, del 1 al ",cantCiclos,"."
 									datosEstudiantesEntero[idEstudianteBuscar,2] <- IngresarEnteroValido(1,cantCiclos)
+								5:
+									// Modificar condición de becado
+									Escribir "Elija una opción respecto a la condición del estudiante:"
+									Escribir "0. No becado."
+									Escribir "1. Con media beca."
+									Escribir "2. Con beca completa."
+									datosEstudiantesEntero[idEstudianteBuscar,3] <- IngresarEnteroValido(0,2)
 								De Otro Modo:
 									// Volver al menú principal
 							FinSegun
@@ -614,28 +645,117 @@ Algoritmo ProdAcred
 				
 				
 			3:
-				// Procesos de matrícula
-				// Contiene las funciones:
-				// 		MatricularEstudianteEnCurso() : Agregar estudiante a ciertos cursos acorde a su ciclo y carrera
-				// 		VerificarMatricula() : Verificar prerequisitos y conflictos horarios 
-				// 		GenerarBoletaMatricula() : con costo total
-				Escribir "=== MATRÍCULA ==="
-				Escribir "Aún no implementado."
-				teclaContinuar
+				// GESTIÓN DE PAGOS
+				Escribir "=== PAGOS ==="
+				Escribir "1. Registrar pago para matrícula de un estudiante."
+				Escribir "2. Mostrar lista de estudiantes con pagos completados."
+				Escribir "3. Mostrar lista de estudiantes con pagos pendientes."
+				Escribir "(otro número). Volver al menú principal."
+				Leer accionMenu
+				Segun accionMenu Hacer
+					1:
+						// BUSCAR Y/O ACTUALIZAR INFORMACIÓN DE ESTUDIANTE
+						Escribir "Ingrese el código exacto (de la forma 256789A) del estudiante a registrar:"
+						idEstudianteBuscar <- 0
+						Leer codigoEstudianteBuscar
+						Para i<-1 Hasta cantEstudiantes Hacer
+							Si datosEstudiantesCaracter[i,1] = codigoEstudianteBuscar Entonces
+								idEstudianteBuscar <- i
+							FinSi
+						FinPara
+						Si idEstudianteBuscar = 0 Entonces
+							Escribir "No se encontró un estudiante con ese código exacto."
+						SiNo
+							Escribir "Se encontró al estudiante:"
+							Escribir "  ",datosEstudiantesCaracter[idEstudianteBuscar,2]
+							Escribir "    Código ",datosEstudiantesCaracter[idEstudianteBuscar,1],", " Sin Saltar
+							Escribir nombreCarrera[datosEstudiantesEntero[idEstudianteBuscar,1]],", ciclo ",datosEstudiantesEntero[idEstudianteBuscar,2]
+							Segun datosEstudiantesEntero[idEstudianteBuscar,3] Hacer
+								0:
+									Escribir "    Sin beca."
+								1:
+									Escribir "    Media beca."
+								2:
+									Escribir "    Beca completa."
+							FinSegun
+							// Verificar si ya pagó
+							Si datosEstudiantesEntero[idEstudianteBuscar,4] <> 0 Entonces
+								Escribir "Este estudiante ya pagó su derecho de matrícula."
+							SiNo
+								// Verificar si tiene beca completa
+								Si datosEstudiantesEntero[idEstudianteBuscar,3] = 2 Entonces
+									Escribir "El estudiante tiene beca completa."
+									Escribir "Monto a pagar: S/. 0.00"
+									datosEstudiantesEntero[idEstudianteBuscar,4] <- 1
+									Escribir "Pago registrado correctamente. El estudiante ya puede matricularse."
+								SiNo
+									// Proceder al cálculo del monto total a pagar.
+									montoPagar <- 0
+									Escribir "Ingrese el número de cursos desaprobados (de 0 a 10) del estudiante:"
+									nroCursosDesaprob <- IngresarEnteroValido(0,10)
+									montoPagar <- montoMatricBase + nroCursosDesaprob*costoCursoDesaprob 
+									Escribir "S/. 20  Monto base"
+									Escribir "S/. ",nroCursosDesaprob*costoCursoDesaprob,"  Cursos desaprobados (S/.20 c/u)"
+									Si datosEstudiantesEntero[idEstudianteBuscar,3] = 1 Entonces
+										Escribir "La media beca aplica un 50% de descuento."
+										montoPagar <- montoPagar/2
+									FinSi
+									Escribir "S/. ",montoPagar,"  TOTAL A PAGAR"
+									Escribir "¿El estudiante pagó el monto requerido?"
+									Escribir "1. Sí."
+									Escribir "(otro número). No."
+									Leer accionMenu
+									Si accionMenu = 1 Entonces
+										datosEstudiantesEntero[idEstudianteBuscar,4] <- 1
+										Escribir "Pago registrado correctamente. El estudiante ya puede matricularse."
+									SiNo
+										Escribir "No se registró ningún pago."
+									FinSi
+									
+								FinSi
+							FinSi
+						FinSi
+						teclaContinuar
+						
+					2:
+						Escribir "== ESTUDIANTES CON PAGOS COMPLETADOS =="
+						Para i <- 1 Hasta cantEstudiantes Hacer
+							Si datosEstudiantesEntero[i,4] = 1 Entonces
+								Escribir "  ",datosEstudiantesCaracter[i,2]
+								Escribir "    Código ",datosEstudiantesCaracter[i,1],", " Sin Saltar
+								Escribir nombreCarrera[datosEstudiantesEntero[i,1]],", ciclo ",datosEstudiantesEntero[i,2]
+								Escribir ""
+							FinSi
+						FinPara
+						teclaContinuar
+						
+					3:
+						Escribir "== ESTUDIANTES CON PAGOS PENDIENTES =="
+						Para i <- 1 Hasta cantEstudiantes Hacer
+							Si datosEstudiantesEntero[i,4] = 0 Entonces
+								Escribir "  ",datosEstudiantesCaracter[i,2]
+								Escribir "    Código ",datosEstudiantesCaracter[i,1],", " Sin Saltar
+								Escribir nombreCarrera[datosEstudiantesEntero[i,1]],", ciclo ",datosEstudiantesEntero[i,2]
+								Escribir ""
+							FinSi
+						FinPara
+						teclaContinuar
+						
+					De Otro Modo:
+						//Volver al menú principal
+				FinSegun
 				
 				
 				
 				
 				
 			4:
-				// Gestión de Pagos
+				// Procesos de matrícula
 				// Contiene las funciones:
-				// 		RegistrarPagos() : de matrícula
-				// 		CalcularDscto() : por pronto pago o becas.
-				// Pago único al inicio de ciclo
-				// Si hay beca o media beca descuento 100% o 50%.
-				// La condicion de becado es tambien parte de la info de cada estudiante
-				Escribir "=== PAGOS ==="
+				// 		MatricularEstudianteEnCurso() : Agregar estudiante a ciertos cursos acorde a su ciclo y carrera
+				// 		VerificarMatricula() : Verificar prerequisitos y conflictos horarios 
+				// 		GenerarBoletaMatricula() : con costo total
+				Escribir "=== MATRÍCULA ==="
 				Escribir "Aún no implementado."
 				teclaContinuar
 				
