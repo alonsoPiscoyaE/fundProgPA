@@ -1,4 +1,6 @@
+
 // FUNCIONES Y SUBPROCESOS DEFINIDOS MANUALMENTE
+
 Funcion valorVerificado <- IngresarEnteroValido(limInf,limSup)
 	// FUNCION PARA LEER ENTEROS QUE NECESARIAMENTE DEBEN ESTAR EN UN INTERVALO
 	Definir valorIngresado Como Entero
@@ -10,11 +12,26 @@ Funcion valorVerificado <- IngresarEnteroValido(limInf,limSup)
 	valorVerificado <- valorIngresado
 FinFuncion
 
-SubProceso teclaContinuar
+SubProceso TeclaContinuar
 	// SUBPROCESO QUE PIDE PRESIONAR UNA TECLA ANTES DE CONTINUAR
 	//     PARA PODER LEER LA INFORMACIÓN EN PANTALLA
 	Escribir "Presione cualquier tecla para para continuar."
 	Esperar Tecla
+FinSubProceso
+
+SubProceso ImprimirDiasSemana
+	// DÍAS DE SEMANA CON CLASES
+	Escribir "1. Lunes        4. Jueves"
+	Escribir "2. Martes       5. Viernes"
+	Escribir "3. Miércoles    6. Sábado"
+FinSubProceso
+
+SubProceso ImprimirBloquesHorarios
+	// BLOQUES HORARIOS PARA CLASES PREDEFINIDOS
+	Escribir "1. 07:30-09:10    5. 14:10-15:50"
+	Escribir "2. 09:10-10:50    6. 15:50-17:30"
+	Escribir "3. 10:50-12:30    7. 17:30-19:10"
+	Escribir "4. 12:30-14:10    8. 19:10-20:50"
 FinSubProceso
 
 
@@ -23,10 +40,11 @@ FinSubProceso
 Algoritmo ProdAcred
 	
 	//     DEFINICIONES BASE
-	Definir cantEstudiantes, cantCursosReg, cantCursosPorCiclo, cantCiclos, cantCarreras Como Entero
+	Definir cantEstudiantes, cantCursosReg, cantCursosPorCiclo, maxBloqHorarCurso, cantCiclos, cantCarreras Como Entero
 	cantEstudiantes <- 9
 	cantCursosReg <- 24
 	cantCursosPorCiclo <- 10
+	maxBloqHorarCurso <- 4
 	cantCiclos <- 10
 	cantCarreras <- 3
 	
@@ -52,31 +70,24 @@ Algoritmo ProdAcred
 	// ESTADO DE MATRÍCULA
 	//    0: No matriculado
 	//    1: Ya matriculado
-	Dimension datosEstudiantesHorario[cantEstudiantes,6,18]
+	Dimension datosEstudiantesHorario[cantEstudiantes,6,9]
 	// Arreglo de booleanos lógicos (0 o 1) donde:
 	// 0 = Espacio vacío sin clases
 	// 1 = Espacio lleno con clases
 	// La 2da dimensión es el Día de la semana (1-6)
-	// La 3ra dimensión es el Bloque horario (1-18)
+	// La 3ra dimensión es el Bloque horario (1-9)
 	//   °ID interno    Lun  Mar  Mie  Jue  Vie  Sab
-	//   7:30 - 8:20     1    2    3    4    5    6
-	//   8:20 - 9:10     2
-	//   9:10 - 10:00    3
-	//  10:00 - 10:50    4
-	//  10:50 - 11:40    5
-	//  11:40 - 12:30    6
-	//  12:30 - 13:20    7
-	//  13:20 - 14:10    8
-	//  14:10 - 15:00    9
-	//  15:00 - 15:50   10
-	//  15:50 - 16:40   11
-	//  16:40 - 17:30   12
-	//  17:30 - 18:20   13
-	//  18:20 - 19:10   14
-	//  19:10 - 20:00   15
-	//  20:00 - 20:50   16
-	//  20:50 - 21:40   17
-	//  21:40 - 22:30   18
+	//  07:30 - 09:10    1    2    3    4    5    6
+	//  09:10 - 10:50    2
+	//  10:50 - 12:30    3
+	//  12:30 - 14:10    4
+	//  14:10 - 15:50    5
+	//  15:50 - 17:30    6
+	//  17:30 - 19:10    7
+	//  19:10 - 20:50    8
+	Definir nombreDiasSemana, nombreBloqHorar Como Caracter
+	Dimension nombreDiasSemana[6]
+	Dimension nombreBloqHorar[8]
 	
 	
 	//     "BASE DE DATOS" DE CARRERA
@@ -92,11 +103,14 @@ Algoritmo ProdAcred
 	// Cada ciclo (2da dimensión) admite hasta 10 cursos (3ra dimensión) inicialmente.
 	// Cada carrera (1ra dimensión) tiene 10 ciclos.
 	Definir datosCursosCaracter Como Caracter
-	Definir datosCursosEntero Como Entero
+	Definir datosCursosEntero, datosCursosHorario Como Entero
 	Dimension datosCursosCaracter[cantCarreras,cantCiclos,cantCursosPorCiclo,3]
 	// Los 3 espacios corresponden a CODIGO (ABCD-1001), NOMBRE, CÓDIGO PREREQUISITO (ABCD-1001)
 	Dimension datosCursosEntero[cantCarreras,cantCiclos,cantCursosPorCiclo,3]
 	// Los 3 espacios corresponden a CRÉDITOS, CUPOS ACTUALES, CUPOS MÁXIMOS
+	Dimension datosCursosHorario[cantCarreras,cantCiclos,cantCursosPorCiclo,maxBloqHorarCurso,2]
+	// 4ta dimension: cada una de los 4 bloques horarios máximo de cada curso (maxBloqHorarCurso=4).
+	// 5ta dimension: DÍA, BLOQUE HORARIO.
 	
 	
 	//     REGISTRO DE CURSOS POR ESTUDIANTE	
@@ -106,38 +120,53 @@ Algoritmo ProdAcred
 	// 0 = No lleva el curso
 	// 1 = Sí lleva el curso
 	// La 1ra dimensión es el ID interno del estudiante
-	// La 2da dimensión es el ID interno del curso
+	// La 2da dimensión corresponde al ciclo
+	// La 3ra Dimension corresponde al ID interno del curso dentro del ciclo
 	
 	
 	//     INICIALIZACIÓN DE INFORMACIÓN PREDEFINIDA
 	nombreCarrera[1] <- "Ingeniería Civil"       // ID interno: 1
 	nombreCarrera[2] <- "Ingeniería de Sistemas" // ID interno: 2
 	nombreCarrera[3] <- "Arquitectura"           // ID interno: 3
+	nombreDiasSemana[1] <- "Lunes"
+	nombreDiasSemana[2] <- "Martes"
+	nombreDiasSemana[3] <- "Miércoles"
+	nombreDiasSemana[4] <- "Jueves"
+	nombreDiasSemana[5] <- "Viernes"
+	nombreDiasSemana[6] <- "Sábado"
+	nombreBloqHorar[1] <- "07:30-09:10"
+	nombreBloqHorar[2] <- "09:10-10:50"
+	nombreBloqHorar[3] <- "10:50-12:30"
+	nombreBloqHorar[4] <- "12:30-14:10"
+	nombreBloqHorar[5] <- "14:10-15:50"
+	nombreBloqHorar[6] <- "15:50-17:30"
+	nombreBloqHorar[7] <- "17:30-19:10"
+	nombreBloqHorar[8] <- "19:10-20:50"
 	// ESTUDIANTES (ID 1 a 9)
 		datosEstudiantesCaracter[1,1] <- "231639H"  // Codigo
 		datosEstudiantesCaracter[1,2] <- "PISCOYA ENCAJIMA JOSE ALONSO"
 		datosEstudiantesEntero[1,1] <- 2  // Sistemas
-		datosEstudiantesEntero[1,2] <- 9  // Ciclo
+		datosEstudiantesEntero[1,2] <- 4  // Ciclo
 		datosEstudiantesEntero[1,3] <- 2  // Beca completa
 		datosEstudiantesCaracter[2,1] <- "231645H"  // Codigo
 		datosEstudiantesCaracter[2,2] <- "VILLEGAS CUENCA JOSE MANUEL"
 		datosEstudiantesEntero[2,1] <- 2  // Sistemas
-		datosEstudiantesEntero[2,2] <- 8  // Ciclo
+		datosEstudiantesEntero[2,2] <- 4  // Ciclo
 		datosEstudiantesEntero[2,3] <- 1  // Media beca
 		datosEstudiantesCaracter[3,1] <- "231625G"  // Codigo
 		datosEstudiantesCaracter[3,2] <- "CAUCHOS LABAN NELSON ANIBAL"
 		datosEstudiantesEntero[3,1] <- 2  // Sistemas
-		datosEstudiantesEntero[3,2] <- 7  // Ciclo
+		datosEstudiantesEntero[3,2] <- 4  // Ciclo
 		datosEstudiantesEntero[3,3] <- 1  // Media beca
 		datosEstudiantesCaracter[4,1] <- "231624K"  // Codigo
 		datosEstudiantesCaracter[4,2] <- "CASTRO MENDOZA JHORDY FABRICIO"
 		datosEstudiantesEntero[4,1] <- 1  // Civil
-		datosEstudiantesEntero[4,2] <- 6  // Ciclo
+		datosEstudiantesEntero[4,2] <- 3  // Ciclo
 		datosEstudiantesEntero[4,3] <- 2  // Beca completa
 		datosEstudiantesCaracter[5,1] <- "231620E"  // Codigo
 		datosEstudiantesCaracter[5,2] <- "BARRERA ALVARADO HENRY CRISTIAN"
 		datosEstudiantesEntero[5,1] <- 1  // Civil
-		datosEstudiantesEntero[5,2] <- 4  // Ciclo
+		datosEstudiantesEntero[5,2] <- 3  // Ciclo
 		datosEstudiantesEntero[5,3] <- 1  // Media beca
 		datosEstudiantesCaracter[6,1] <- "231640F"  // Codigo
 		datosEstudiantesCaracter[6,2] <- "QUISPE CABEZAS JUAN DE DIOS"
@@ -147,12 +176,12 @@ Algoritmo ProdAcred
 		datosEstudiantesCaracter[7,1] <- "231638A"  // Codigo
 		datosEstudiantesCaracter[7,2] <- "PAREDES AGUINAGA JOSUE SAMUEL"
 		datosEstudiantesEntero[7,1] <- 3  // Arquitectura
-		datosEstudiantesEntero[7,2] <- 5  // Ciclo
+		datosEstudiantesEntero[7,2] <- 2  // Ciclo
 		datosEstudiantesEntero[7,3] <- 2  // Beca completa
 		datosEstudiantesCaracter[8,1] <- "231631G"  // Codigo
 		datosEstudiantesCaracter[8,2] <- "LOZANO PAZ ABIMA GALILEY"
 		datosEstudiantesEntero[8,1] <- 3  // Arquitectura
-		datosEstudiantesEntero[8,2] <- 3  // Ciclo
+		datosEstudiantesEntero[8,2] <- 1  // Ciclo
 		datosEstudiantesEntero[8,3] <- 0  // Sin becas
 		datosEstudiantesCaracter[9,1] <- "231636I"  // Codigo
 		datosEstudiantesCaracter[9,2] <- "NUÑEZ RUBIO MAICOL JHORDY"
@@ -161,28 +190,36 @@ Algoritmo ProdAcred
 		datosEstudiantesEntero[9,3] <- 0  // Sin becas
 	// CARRERAS ING. CIVIL (ID 1)
 		// Ciclo 1
-			datosCursosCaracter[1,1,1,1] <- "MATG1001" // Código de curso 1
+			datosCursosCaracter[1,1,1,1] <- "MATC1001" // Código de curso 1
 			datosCursosCaracter[1,1,1,2] <- "Fundamentos matemáticos"
 			datosCursosCaracter[1,1,1,3] <- "0"    // Sin prerrequisito
 			datosCursosEntero[1,1,1,1] <- 4    // Créditos
 			datosCursosEntero[1,1,1,2] <- 0    // Cupos actuales
 			datosCursosEntero[1,1,1,3] <- 35    // Cupos máximos
-			datosCursosCaracter[1,1,2,1] <- "MATG1002" // Código de curso 2
+			datosCursosHorario[1,1,1,1,1] <- 1 // Hora 1 Lunes
+			datosCursosHorario[1,1,1,1,2] <- 1 // Hora 1 07:30-09:10
+			datosCursosHorario[1,1,1,2,1] <- 2 // Hora 2 Martes
+			datosCursosHorario[1,1,1,2,2] <- 1 // Hora 2 07:30-09:10
+			datosCursosCaracter[1,1,2,1] <- "MATC1002" // Código de curso 2
 			datosCursosCaracter[1,1,2,2] <- "Geometría descriptiva"
 			datosCursosCaracter[1,1,2,3] <- "0"    // Sin prerrequisito
 			datosCursosEntero[1,1,2,1] <- 3    // Créditos
 			datosCursosEntero[1,1,2,2] <- 0    // Cupos actuales
 			datosCursosEntero[1,1,2,3] <- 40    // Cupos máximos
+			datosCursosHorario[1,1,2,1,1] <- 1 // Hora 1 Lunes
+			datosCursosHorario[1,1,2,1,2] <- 2 // Hora 1 09:10-10:50
+			datosCursosHorario[1,1,2,2,1] <- 2 // Hora 2 Martes
+			datosCursosHorario[1,1,2,2,2] <- 2 // Hora 2 09:10-10:50
 		// Ciclo 2
 			datosCursosCaracter[1,2,1,1] <- "CALC1011" // Código de curso 1
 			datosCursosCaracter[1,2,1,2] <- "Cálculo Diferencial"
-			datosCursosCaracter[1,2,1,3] <- "MATG1001" // Prerrequisito
+			datosCursosCaracter[1,2,1,3] <- "MATC1001" // Prerrequisito
 			datosCursosEntero[1,2,1,1] <- 5    // Créditos
 			datosCursosEntero[1,2,1,2] <- 0    // Cupos actuales
 			datosCursosEntero[1,2,1,3] <- 30    // Cupos máximos
 			datosCursosCaracter[1,2,2,1] <- "ALIN1101" // Código de curso 2
 			datosCursosCaracter[1,2,2,2] <- "Álgebra Lineal 1"
-			datosCursosCaracter[1,2,2,3] <- "MATG1002" // Prerrequisito
+			datosCursosCaracter[1,2,2,3] <- "MATC1002" // Prerrequisito
 			datosCursosEntero[1,2,2,1] <- 4    // Créditos
 			datosCursosEntero[1,2,2,2] <- 0    // Cupos actuales
 			datosCursosEntero[1,2,2,3] <- 30    // Cupos máximos
@@ -214,7 +251,7 @@ Algoritmo ProdAcred
 			datosCursosEntero[1,4,2,3] <- 20    // Cupos máximos
 	// CARRERAS ING. SISTEMAS (ID 2)
 		// Ciclo 1
-			datosCursosCaracter[2,1,1,1] <- "MATG1001" // Código de curso 1
+			datosCursosCaracter[2,1,1,1] <- "MATS1001" // Código de curso 1
 			datosCursosCaracter[2,1,1,2] <- "Fundamentos matemáticos"
 			datosCursosCaracter[2,1,1,3] <- "0"    // Sin prerrequisito
 			datosCursosEntero[2,1,1,1] <- 4    // Créditos
@@ -227,9 +264,9 @@ Algoritmo ProdAcred
 			datosCursosEntero[2,1,2,2] <- 0    // Cupos actuales
 			datosCursosEntero[2,1,2,3] <- 40    // Cupos máximos
 		// Ciclo 2
-			datosCursosCaracter[2,2,1,1] <- "CALC1011" // Código de curso 1
+			datosCursosCaracter[2,2,1,1] <- "CALS1011" // Código de curso 1
 			datosCursosCaracter[2,2,1,2] <- "Cálculo Diferencial"
-			datosCursosCaracter[2,2,1,3] <- "MATG1001" // Prerrequisito
+			datosCursosCaracter[2,2,1,3] <- "MATS1001" // Prerrequisito
 			datosCursosEntero[2,2,1,1] <- 5    // Créditos
 			datosCursosEntero[2,2,1,2] <- 0    // Cupos actuales
 			datosCursosEntero[2,2,1,3] <- 30    // Cupos máximos
@@ -240,9 +277,9 @@ Algoritmo ProdAcred
 			datosCursosEntero[2,2,2,2] <- 0    // Cupos actuales
 			datosCursosEntero[2,2,2,3] <- 30    // Cupos máximos
 		// Ciclo 3
-			datosCursosCaracter[2,3,1,1] <- "CALC1012" // Código de curso 1
+			datosCursosCaracter[2,3,1,1] <- "CALS1012" // Código de curso 1
 			datosCursosCaracter[2,3,1,2] <- "Cálculo Integral"
-			datosCursosCaracter[2,3,1,3] <- "CALC1011"    // Prerrequisito
+			datosCursosCaracter[2,3,1,3] <- "CALS1011"    // Prerrequisito
 			datosCursosEntero[2,3,1,1] <- 4    // Créditos
 			datosCursosEntero[2,3,1,2] <- 0    // Cupos actuales
 			datosCursosEntero[2,3,1,3] <- 30    // Cupos máximos
@@ -255,7 +292,7 @@ Algoritmo ProdAcred
 		// Ciclo 4
 			datosCursosCaracter[2,4,1,1] <- "ESTC4101" // Código de curso 1
 			datosCursosCaracter[2,4,1,2] <- "Estadística"
-			datosCursosCaracter[2,4,1,3] <- "CALC1012" // Prerrequisito
+			datosCursosCaracter[2,4,1,3] <- "CALS1012" // Prerrequisito
 			datosCursosEntero[2,4,1,1] <- 5    // Créditos
 			datosCursosEntero[2,4,1,2] <- 0    // Cupos actuales
 			datosCursosEntero[2,4,1,3] <- 28    // Cupos máximos
@@ -267,35 +304,35 @@ Algoritmo ProdAcred
 			datosCursosEntero[2,4,2,3] <- 20    // Cupos máximos
 	// CARRERAS ARQUITECTURA (ID 3)
 		// Ciclo 1
-			datosCursosCaracter[3,1,1,1] <- "MATG1001" // Código de curso 1
+			datosCursosCaracter[3,1,1,1] <- "MATA1001" // Código de curso 1
 			datosCursosCaracter[3,1,1,2] <- "Fundamentos matemáticos"
 			datosCursosCaracter[3,1,1,3] <- "0"    // Sin prerrequisito
 			datosCursosEntero[3,1,1,1] <- 4    // Créditos
 			datosCursosEntero[3,1,1,2] <- 0    // Cupos actuales
 			datosCursosEntero[3,1,1,3] <- 35    // Cupos máximos
-			datosCursosCaracter[3,1,2,1] <- "MATG1002" // Código de curso 2
+			datosCursosCaracter[3,1,2,1] <- "MATA1002" // Código de curso 2
 			datosCursosCaracter[3,1,2,2] <- "Geometría descriptiva"
 			datosCursosCaracter[3,1,2,3] <- "0"    // Sin prerrequisito
 			datosCursosEntero[3,1,2,1] <- 3    // Créditos
 			datosCursosEntero[3,1,2,2] <- 0    // Cupos actuales
 			datosCursosEntero[3,1,2,3] <- 40    // Cupos máximos
 		// Ciclo 2
-			datosCursosCaracter[3,2,1,1] <- "CALC1011" // Código de curso 1
+			datosCursosCaracter[3,2,1,1] <- "CALA1011" // Código de curso 1
 			datosCursosCaracter[3,2,1,2] <- "Cálculo Diferencial"
-			datosCursosCaracter[3,2,1,3] <- "MATG1001" // Prerrequisito
+			datosCursosCaracter[3,2,1,3] <- "MATA1001" // Prerrequisito
 			datosCursosEntero[3,2,1,1] <- 5    // Créditos
 			datosCursosEntero[3,2,1,2] <- 0    // Cupos actuales
 			datosCursosEntero[3,2,1,3] <- 30    // Cupos máximos
 			datosCursosCaracter[3,2,2,1] <- "DTEN1101" // Código de curso 2
 			datosCursosCaracter[3,2,2,2] <- "Dibujo Técnico 1"
-			datosCursosCaracter[3,2,2,3] <- "MATG1002" // Prerrequisito
+			datosCursosCaracter[3,2,2,3] <- "MATA1002" // Prerrequisito
 			datosCursosEntero[3,2,2,1] <- 4    // Créditos
 			datosCursosEntero[3,2,2,2] <- 0    // Cupos actuales
 			datosCursosEntero[3,2,2,3] <- 30    // Cupos máximos
 		// Ciclo 3
-			datosCursosCaracter[3,3,1,1] <- "CALC1012" // Código de curso 1
+			datosCursosCaracter[3,3,1,1] <- "CALA1012" // Código de curso 1
 			datosCursosCaracter[3,3,1,2] <- "Cálculo Integral"
-			datosCursosCaracter[3,3,1,3] <- "CALC1011"    // Prerrequisito
+			datosCursosCaracter[3,3,1,3] <- "CALA1011"    // Prerrequisito
 			datosCursosEntero[3,3,1,1] <- 4    // Créditos
 			datosCursosEntero[3,3,1,2] <- 0    // Cupos actuales
 			datosCursosEntero[3,3,1,3] <- 30    // Cupos máximos
@@ -308,7 +345,7 @@ Algoritmo ProdAcred
 		// Ciclo 4
 			datosCursosCaracter[3,4,1,1] <- "MATE4011" // Código de curso 1
 			datosCursosCaracter[3,4,1,2] <- "Análisis Real Avanzado"
-			datosCursosCaracter[3,4,1,3] <- "CALC1012" // Prerrequisito
+			datosCursosCaracter[3,4,1,3] <- "CALA1012" // Prerrequisito
 			datosCursosEntero[3,4,1,1] <- 5    // Créditos
 			datosCursosEntero[3,4,1,2] <- 0    // Cupos actuales
 			datosCursosEntero[3,4,1,3] <- 28    // Cupos máximos
@@ -326,7 +363,7 @@ Algoritmo ProdAcred
 	Definir idEstudianteBuscar Como Entero
 	// GESTION CURSOS
 	Definir cursoCodigoBuscar Como Caracter
-	Definir cursoCarreraSeleccionado, cursoCicloSeleccionado, idCursoNuevo, cursoCantidadBusq Como Entero
+	Definir cursoCarreraSeleccionado, cursoCicloSeleccionado, idCursoNuevo, cursoCantidadBusq, cursoBloqHorar Como Entero
 	// GESTION PAGOS
 	Definir montoMatricBase, nroCursosDesaprob, costoCursoDesaprob, montoPagar Como Real
 	montoMatricBase <- 20
@@ -334,8 +371,6 @@ Algoritmo ProdAcred
 	// SALIR DEL PROGRAMA
 	Definir verifSalirPrograma Como Real
 	verifSalirPrograma <- 1
-	
-	
 	
 	
 	
@@ -380,7 +415,8 @@ Algoritmo ProdAcred
 							FinSegun
 							Escribir ""
 						FinPara
-						teclaContinuar
+						TeclaContinuar
+						
 						
 					2:
 						// REGISTRAR NUEVO ESTUDIANTE
@@ -410,7 +446,8 @@ Algoritmo ProdAcred
 						
 						// Confirmar registro de estudiante
 						Escribir "Estudiante registrado correctamente."
-						teclaContinuar
+						TeclaContinuar
+						
 						
 					3:
 						// BUSCAR Y/O ACTUALIZAR INFORMACIÓN DE ESTUDIANTE
@@ -477,10 +514,13 @@ Algoritmo ProdAcred
 									// Volver al menú principal
 							FinSegun
 						FinSi
-						teclaContinuar
+						TeclaContinuar
+						
+						
 					De Otro Modo:
 						// Volver al menú principal
 				FinSegun
+				
 				
 				
 				
@@ -541,7 +581,8 @@ Algoritmo ProdAcred
 								FinSi
 							FinPara
 						FinSi
-						teclaContinuar
+						TeclaContinuar
+						
 						
 					2:
 						// REGISTRAR UN NUEVO CURSO
@@ -573,10 +614,22 @@ Algoritmo ProdAcred
 							datosCursosEntero[cursoCarreraSeleccionado,cursoCicloSeleccionado,idNuevoCurso,2] <- 0
 							Escribir "Ingrese el número de cupos máximos, de 10 a 60:"
 							datosCursosEntero[cursoCarreraSeleccionado,cursoCicloSeleccionado,idNuevoCurso,3] <- IngresarEnteroValido(10,60)
+							// Elegir horario del curso
+							Escribir "Ingrese el número de bloques horarios (2h c/u) del curso, de 1 a 4:"
+							cursoBloqHorar <- IngresarEnteroValido(1,4)
+							Para i <- 1 Hasta cursoBloqHorar Hacer
+								Escribir "Ingrese el día de la semana del bloque horario ",i,":"
+								ImprimirDiasSemana
+								datosCursosHorario[cursoCarreraSeleccionado,cursoCicloSeleccionado,idNuevoCurso,i,1] <- IngresarEnteroValido(1,6)
+								Escribir "Ingrese el bloque horario ",i,":"
+								ImprimirBloquesHorarios
+								datosCursosHorario[cursoCarreraSeleccionado,cursoCicloSeleccionado,idNuevoCurso,i,2] <- IngresarEnteroValido(1,8)
+							FinPara
 							cantCursosReg <- cantCursosReg +1
 							Escribir "Curso registrado correctamente."
 						FinSi
-						teclaContinuar
+						TeclaContinuar
+						
 						
 					3:
 						// BUSCAR CURSO Y/O ACTUALIZAR INFORMACIÓN
@@ -640,10 +693,13 @@ Algoritmo ProdAcred
 						Si cursoCantidadBusq <- 0 Entonces
 							Escribir "No se encontró ningún curso con el código proporcionado"
 						FinSi
-						teclaContinuar
+						TeclaContinuar
+						
+						
 					De Otro Modo:
 						// Volver al menú principal
 				FinSegun
+				
 				
 				
 				
@@ -720,7 +776,8 @@ Algoritmo ProdAcred
 								FinSi
 							FinSi
 						FinSi
-						teclaContinuar
+						TeclaContinuar
+						
 						
 					2:
 						Escribir "== ESTUDIANTES CON PAGOS COMPLETADOS =="
@@ -732,7 +789,8 @@ Algoritmo ProdAcred
 								Escribir ""
 							FinSi
 						FinPara
-						teclaContinuar
+						TeclaContinuar
+						
 						
 					3:
 						Escribir "== ESTUDIANTES CON PAGOS PENDIENTES =="
@@ -744,11 +802,13 @@ Algoritmo ProdAcred
 								Escribir ""
 							FinSi
 						FinPara
-						teclaContinuar
+						TeclaContinuar
+						
 						
 					De Otro Modo:
 						//Volver al menú principal
 				FinSegun
+				
 				
 				
 				
@@ -795,11 +855,17 @@ Algoritmo ProdAcred
 							Si datosEstudiantesEntero[idEstudianteBuscar,5] = 1 Entonces
 								Escribir "El estudiante ya está matriculado."
 							SiNo
-								// Proceder a la matrícula
-								
+								// Verificar si ya pagó 
+								Si datosEstudiantesEntero[idEstudianteBuscar,5] = 1 Entonces
+									Escribir "El estudiante no tiene su pago completo procesado aún."
+								SiNo
+									// Proceder a la matrícula
+									
+								FinSi
 							FinSi
 						FinSi
-						teclaContinuar
+						TeclaContinuar
+						
 						
 					2:
 						Escribir "== ESTUDIANTES MATRICULADOS =="
@@ -811,7 +877,8 @@ Algoritmo ProdAcred
 								Escribir ""
 							FinSi
 						FinPara
-						teclaContinuar
+						TeclaContinuar
+						
 						
 					3:
 						Escribir "== ESTUDIANTES SIN MATRICULAR =="
@@ -823,11 +890,13 @@ Algoritmo ProdAcred
 								Escribir ""
 							FinSi
 						FinPara
-						teclaContinuar
+						TeclaContinuar
+						
 						
 					De Otro Modo:
 						//Volver al menú principal
 				FinSegun
+				
 				
 				
 				
@@ -840,7 +909,8 @@ Algoritmo ProdAcred
 				//		EstadísticasMatrícula(): por curso o por carrera
 				Escribir "=== REPORTES ACADÉMICOS ==="
 				Escribir "Aún no implementado."
-				teclaContinuar
+				TeclaContinuar
+				
 				
 				
 				
