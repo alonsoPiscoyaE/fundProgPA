@@ -620,8 +620,6 @@ Algoritmo ProdAcred
 				
 				
 				
-				
-				
 			2:
 				// GESTIÓN DE CURSOS
 				Escribir "=== GESTIÓN DE CURSOS ==="
@@ -817,8 +815,6 @@ Algoritmo ProdAcred
 				
 				
 				
-				
-				
 			3:
 				// GESTIÓN DE PAGOS
 				Escribir "=== GESTION DE PAGOS ==="
@@ -923,8 +919,6 @@ Algoritmo ProdAcred
 					De Otro Modo:
 						//Volver al menú principal
 				FinSegun
-				
-				
 				
 				
 				
@@ -1129,8 +1123,6 @@ Algoritmo ProdAcred
 				
 				
 				
-				
-				
 			5:
 				// Reportes Académicos
 				// Contiene las funciones:
@@ -1227,8 +1219,6 @@ Algoritmo ProdAcred
 				
 				
 				
-				
-				
 			6:
 				// Diálogo para salir del programa
 				Escribir "=== SALIR DEL PROGRAMA ==="
@@ -1241,7 +1231,6 @@ Algoritmo ProdAcred
 				Escribir "No se ingresó una opción correcta."
 		Fin Segun
 	Hasta Que verifSalirPrograma=0
-	
 	
 	// Mensaje de despedida al salir
 	Escribir "======================"
