@@ -466,24 +466,24 @@ Algoritmo ProdAcred
 	
 	
 	//  VARIABLES AUXILIARES
-		// GESTION ALUMNOS, PAGOS y MATRÍCULA
+		// BUSQUEDA DE ALUMNOS EN GESTION ALUMNOS, PAGOS y MATRÍCULA
 			Definir codigoAlumBusq Como Caracter  // Código del alumno buscado
 			Definir idAlumBusq Como Entero  // ID interno del alumno buscado
-		// GESTION CURSOS
+		// BUSQUEDA DE CURSOS EN GESTION CURSOS Y REPORTES ACADEMICOS
 			Definir cursoCodigoBuscar Como Caracter  // Código del curso buscado
+			Definir cursoCantidadBusq  Como Entero // Contador de cursos buscados, para mostrar mensaje si no se encontró ninguno
+		// GESTION CURSOS
 			Definir cursoCarreraSelecc, cursoCicloSelecc Como Entero // Carrera y ciclo del curso buscado o seleccionado
 			Definir idCursoNuevo Como Entero // Lugar dentro del ciclo del nuevo curso a registrarse
-			Definir cursoCantidadBusq  Como Entero // Contador de cursos buscados, para mostrar mensaje si no se encontró ninguno
 			Definir cursoBloqHorar Como Entero // Número de bloques horarios del nuevo curso a registrarse
 		// GESTION PAGOS
-			Definir montoMatricBase, nroCursosDesaprob, costoCursoDesaprob, montoPagar Como Real
-			montoMatricBase <- 20
-			costoCursoDesaprob <- 20
+			Definir montoMatricBase, costoCursoDesaprob, nroCursosDesaprob, montoPagar Como Real
+			montoMatricBase <- 20   // Costo base de matrícula
+			costoCursoDesaprob <- 20   // Costo adicional por curso desaprobado
 		// MATRICULA
-			Definir contMatricBloqHor Como Entero  // Mantiene cuenta del nro de bloques horarios en que se matriculó el alumno
 			Definir verifMatricHor Como Entero  // Cambia de valor si se detecta un cruce de horario, anulando la matrícula
-		// REPORTES
-			Definir contMatricCursos Como Entero // Cuenta el número de cursos en que se registró el alumno
+		// MATRICULA Y REPORTES
+			Definir contMatricBloqHor Como Entero  // Mantiene cuenta del nro de bloques horarios en que se matriculó el alumno
 		// SALIR DEL PROGRAMA
 			Definir verifSalirPrograma Como Real
 			verifSalirPrograma <- 1
