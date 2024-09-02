@@ -2,7 +2,7 @@
 // FUNCIONES Y SUBPROCESOS DEFINIDOS MANUALMENTE
 
 Funcion valorVerificado <- IngresarEnteroValido(limInf,limSup)
-	// FUNCION PARA LEER ENTEROS QUE NECESARIAMENTE DEBEN ESTAR EN UN INTERVALO
+	// FORZAR LEER ENTEROS QUE NECESARIAMENTE DEBEN ESTAR EN UN INTERVALO
 	Definir valorIngresado Como Entero
 	Leer valorIngresado
 	Mientras (valorIngresado<limInf o valorIngresado>limSup) Hacer
@@ -10,6 +10,26 @@ Funcion valorVerificado <- IngresarEnteroValido(limInf,limSup)
 		Leer valorIngresado
 	FinMientras
 	valorVerificado <- valorIngresado
+FinFuncion
+
+Funcion valorMinimo <- EnteroMinimo(valor1,valor2)
+	// DEVOLVER EL MÍNIMO DE DOS ENTEROS
+	Definir valorMinimo Como Entero
+	Si valor1 < valor2 Entonces
+		valorMinimo <- valor1
+	SiNo
+		valorMinimo <- valor2
+	FinSi
+FinFuncion
+
+Funcion valorMaximo <- EnteroMaximo(valor1,valor2)
+	// DEVOLVER EL MÁXIMO DE DOS ENTEROS
+	Definir valorMaximo Como Entero
+	Si valor1 > valor2 Entonces
+		valorMaximo <- valor1
+	SiNo
+		valorMaximo <- valor2
+	FinSi
 FinFuncion
 
 SubProceso TeclaContinuar
@@ -965,7 +985,7 @@ Algoritmo ProdAcred
 								Escribir "El alumno ya está matriculado."
 							SiNo
 								// Verificar si ya pagó 
-								Si datAlumEnt[idAlumBusq,5] = 1 Entonces
+								Si datAlumEnt[idAlumBusq,4] = 0 Entonces
 									Escribir "El alumno no tiene su pago completo procesado aún."
 								SiNo
 									
@@ -973,7 +993,7 @@ Algoritmo ProdAcred
 									// PROCEDER A LA MATRÍCULA
 									Escribir "El alumno puede matricularse en los siguientes cursos:"
 									// Mostrar lista de cursos según ciclo del alumno.
-									Para i<- datAlumEnt[idAlumBusq,2]-1 Hasta datAlumEnt[idAlumBusq,2]+1 Hacer
+									Para i<- EnteroMaximo(1,datAlumEnt[idAlumBusq,2]-1) Hasta EnteroMinimo(10,datAlumEnt[idAlumBusq,2]+1) Hacer
 										// Mostrar solo cursos del ciclo seleccionado
 										Escribir "CICLO ",i,":"
 										Para j<-1 Hasta cantCursosPorCiclo Hacer
@@ -1008,7 +1028,7 @@ Algoritmo ProdAcred
 									contMatricBloqHor <- 0
 									verifMatricHor <- 0
 									// Para cada i = ciclo actual, el anterior y el siguiente. (solo se permite matricula hasta cursos de 3 ciclos consecutivos)
-									Para i<- datAlumEnt[idAlumBusq,2]-1 Hasta datAlumEnt[idAlumBusq,2]+1 Hacer
+									Para i<- EnteroMaximo(1,datAlumEnt[idAlumBusq,2]-1) Hasta EnteroMinimo(10,datAlumEnt[idAlumBusq,2]+1) Hacer
 										// Para cada espacio dentro del ciclo
 										Para j<-1 Hasta cantCursosPorCiclo Hacer
 											// Recordar que datAlumEnt[idAlumBusq,1] es la carrera del alumno
@@ -1059,13 +1079,13 @@ Algoritmo ProdAcred
 									// CONFIRMAR O ANULAR MATRÍCULA
 									Si verifMatricHor = 1 Entonces
 										Escribir "Se ha detectado un cruce de horarios. Matrícula cancelada."
-										// Reiniciar matriz de horarios del estudiante
+										// Reiniciar matriz de horarios del alumno
 										Para i <- 1 Hasta 6 Hacer
 											Para j <- 1 Hasta 8 Hacer
 												datAlumHor[idAlumBusq,i,j] <- FALSO
 											FinPara
 										FinPara
-										// Reiniciar matriz de cursos registrados
+										// Reiniciar matriz de cursos registrados del alumno
 										Para i <- 1 Hasta maxCursosPorAlum Hacer
 											Para j <- 1 Hasta 2 Hacer
 												datAlumCurs[idAlumBusq,i,j] <- 0
