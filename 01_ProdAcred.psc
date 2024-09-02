@@ -944,11 +944,7 @@ Algoritmo ProdAcred
 				
 				
 			4:
-				// Procesos de matrícula
-				// Contiene las funciones:
-				// 		MatricularalumnoEnCurso() : Agregar alumno a ciertos cursos acorde a su ciclo y carrera
-				// 		VerificarMatricula() : Verificar prerequisitos y conflictos horarios 
-				// 		GenerarBoletaMatricula() : con costo total
+				// PROCESO DE MATRÍCULA
 				Escribir "=== MATRÍCULA ==="
 				Escribir "1. Registrar matrícula de un alumno."
 				Escribir "2. Mostrar lista de alumnos matriculados."
@@ -1144,10 +1140,7 @@ Algoritmo ProdAcred
 				
 				
 			5:
-				// Reportes Académicos
-				// Contiene las funciones:
-				//		GenerarReportealumno() : por alumno, ingresando código.
-				//		EstadísticasMatrícula(): por curso o por carrera
+				// RREPORTES ACADÉMICOS
 				Escribir "=== REPORTES ACADÉMICOS ==="
 				Escribir "1. Reporte de alumno."
 				Escribir "2. Estadísticas de curso"
