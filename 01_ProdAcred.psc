@@ -552,6 +552,8 @@ Algoritmo ProdAcred
 							Escribir i,". ",nombreCarrera[i]
 						FinPara
 						datAlumEnt[cantAlum,1] <- IngresarEnteroValido(1,cantCarreras)
+						// Aumentar la cantidad de alumnos en el registro de esa carrera
+						cantAlumCarrera[datAlumEnt[cantAlum,1]] <- cantAlumCarrera[datAlumEnt[cantAlum,1]] +1
 						Escribir "Ingrese el ciclo en que se encuentra, del 1 al ",cantCiclos,"."
 						datAlumEnt[cantAlum,2] <- IngresarEnteroValido(1,cantCiclos)
 						Escribir "Elija una opción respecto a la condición del alumno:"
