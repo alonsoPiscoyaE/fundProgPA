@@ -483,7 +483,7 @@ Algoritmo ProdAcred
 		// MATRICULA
 			Definir verifMatricHor Como Entero  // Cambia de valor si se detecta un cruce de horario, anulando la matrícula
 		// MATRICULA Y REPORTES
-			Definir contMatricBloqHor Como Entero  // Mantiene cuenta del nro de bloques horarios en que se matriculó el alumno
+			Definir contCursosMatric Como Entero  // Mantiene cuenta del nro de cursos en que se matriculó el alumno
 		// SALIR DEL PROGRAMA
 			Definir verifSalirPrograma Como Real
 			verifSalirPrograma <- 1
@@ -1023,15 +1023,15 @@ Algoritmo ProdAcred
 									Escribir "Recuerde que solo puede matricularse en un máximo de ",maxCursosPorAlum," cursos a la vez."
 									TeclaContinuar
 									// Elegir en cuáles se puede matricular
-									contMatricBloqHor <- 0
+									contCursosMatric <- 0
 									verifMatricHor <- 0
 									// Para cada i = ciclo actual, el anterior y el siguiente. (solo se permite matricula hasta cursos de 3 ciclos consecutivos)
 									Para i<- EnteroMaximo(1,datAlumEnt[idAlumBusq,2]-1) Hasta EnteroMinimo(10,datAlumEnt[idAlumBusq,2]+1) Hacer
 										// Para cada espacio dentro del ciclo
 										Para j<-1 Hasta cantCursosPorCiclo Hacer
 											// Recordar que datAlumEnt[idAlumBusq,1] es la carrera del alumno
-											Si (datCursCar[datAlumEnt[idAlumBusq,1],i,j,1] <> "" y datCursEnt[datAlumEnt[idAlumBusq,1],i,j,2]<datCursEnt[datAlumEnt[idAlumBusq,1],i,j,3] y verifMatricHor = 0) Entonces
-												// Si el nombre no está vacío, los cupos actuales son menores que los máximos, y no hay cruces, entonces 
+											Si (datCursCar[datAlumEnt[idAlumBusq,1],i,j,1] <> "" y datCursEnt[datAlumEnt[idAlumBusq,1],i,j,2]<datCursEnt[datAlumEnt[idAlumBusq,1],i,j,3]) y (contCursosMatric <= maxCursosPorAlum y verifMatricHor = 0) Entonces
+												// Si el nombre no está vacío, los cupos actuales son menores que los máximos, el numero de cursos matriculados es menor al límite, y no hay cruces, entonces 
 												// Imprimir curso
 												Escribir datCursCar[datAlumEnt[idAlumBusq,1],i,j,1],": ",datCursCar[datAlumEnt[idAlumBusq,1],i,j,2]
 												// Preguntar matrícula
@@ -1048,23 +1048,20 @@ Algoritmo ProdAcred
 																// Verificar si el espacio del horario del alumno está vacío
 																// Recordar que datAlumHor[id del estudiante, ciclo del curso, lugar en el ciclo del curso]
 																Si datAlumHor[idAlumBusq,datCursHor[datAlumEnt[idAlumBusq,1],i,j,k,1],datCursHor[datAlumEnt[idAlumBusq,1],i,j,k,2]] = FALSO Entonces
-																	// Espacio disponible, registrar curso en matrícula
+																	// Espacio disponible, registrar hora en horario
 																	datAlumHor[idAlumBusq,datCursHor[datAlumEnt[idAlumBusq,1],i,j,k,1],datCursHor[datAlumEnt[idAlumBusq,1],i,j,k,2]] <- VERDADERO
-																	contMatricBloqHor <- contMatricBloqHor +1
-																	// Agregar solo si es diferente al anterior
-																	Si (contMatricBloqHor > 1 y (i <> datAlumCurs[idAlumBusq,contMatricBloqHor-1,1] o j <> datAlumCurs[idAlumBusq,contMatricBloqHor-1,2])) Entonces
-																		datAlumCurs[idAlumBusq,contMatricBloqHor,1] <- i // Guardar ciclo
-																		datAlumCurs[idAlumBusq,contMatricBloqHor,2] <- j // Guardar lugar dentro del ciclo
-																		// Aumentar número de cupos del curso en 1
-																		datCursEnt[datAlumEnt[idAlumBusq,1],i,j,2] <- datCursEnt[datAlumEnt[idAlumBusq,1],i,j,2] +1
-																	FinSi
 																SiNo
 																	// Espacio ocupado, detectar cruce para detener el bucle
 																	verifMatricHor <- 1
 																FinSi
 															FinSi
 														FinPara
-														
+														// Guardar datos del curso en el registro de matrícula del alumno
+														contCursosMatric <- contCursosMatric +1
+														datAlumCurs[idAlumBusq,contCursosMatric,1] <- i // Guardar ciclo
+														datAlumCurs[idAlumBusq,contCursosMatric,2] <- j // Guardar lugar dentro del ciclo
+														// Aumentar número de cupos del curso en 1
+														datCursEnt[datAlumEnt[idAlumBusq,1],i,j,2] <- datCursEnt[datAlumEnt[idAlumBusq,1],i,j,2] +1
 													De Otro Modo:
 														// No hace nada
 												FinSegun
@@ -1177,16 +1174,16 @@ Algoritmo ProdAcred
 							FinSegun
 						FinSi
 						Escribir "El alumno está matriculado en los siguientes cursos:"
-						contMatricBloqHor <- 0
+						contCursosMatric <- 0
 						Para i <- 1 Hasta maxCursosPorAlum Hacer
 							// No trabajar con espacios vacíos
 							Si datAlumCurs[idAlumBusq,i,1] <> 0 Entonces
 								// Imprimir el código y nombre del curso
-								contMatricBloqHor <- contMatricBloqHor +1
+								contCursosMatric <- contCursosMatric +1
 								Escribir "  ",datCursCar[datAlumEnt[idAlumBusq,1],datAlumCurs[idAlumBusq,i,1],datAlumCurs[idAlumBusq,i,2],1],": ",datCursCar[datAlumEnt[idAlumBusq,1],datAlumCurs[idAlumBusq,i,1],datAlumCurs[idAlumBusq,i,2],2]
 							FinSi
 						FinPara
-						Si contMatricBloqHor = 0 Entonces
+						Si contCursosMatric = 0 Entonces
 							Escribir "  (Ninguno)"
 						FinSi
 						TeclaContinuar
