@@ -481,7 +481,7 @@ Algoritmo ProdAcred
 			montoMatricBase <- 20   // Costo base de matrícula
 			costoCursoDesaprob <- 20   // Costo adicional por curso desaprobado
 		// MATRICULA
-			Definir verifMatricHor Como Entero  // Cambia de valor si se detecta un cruce de horario, anulando la matrícula
+			Definir verifCruceHor Como Entero  // Cambia de valor si se detecta un cruce de horario, anulando la matrícula
 		// MATRICULA Y REPORTES
 			Definir contCursosMatric Como Entero  // Mantiene cuenta del nro de cursos en que se matriculó el alumno
 		// SALIR DEL PROGRAMA
@@ -847,7 +847,7 @@ Algoritmo ProdAcred
 				Leer accionMenu
 				Segun accionMenu Hacer
 					1:
-						// BUSCAR Y/O ACTUALIZAR INFORMACIÓN DE alumno
+						// BUSCAR Y/O ACTUALIZAR INFORMACIÓN DE ALUMNO
 						Escribir "Ingrese el código exacto (de la forma 256789A) del alumno a registrar:"
 						Leer codigoAlumBusq
 						idAlumBusq <- 0
@@ -1024,15 +1024,15 @@ Algoritmo ProdAcred
 									TeclaContinuar
 									// Elegir en cuáles se puede matricular
 									contCursosMatric <- 0
-									verifMatricHor <- 0
+									verifCruceHor <- 0
 									// Para cada i = ciclo actual, el anterior y el siguiente. (solo se permite matricula hasta cursos de 3 ciclos consecutivos)
 									Para i<- EnteroMaximo(1,datAlumEnt[idAlumBusq,2]-1) Hasta EnteroMinimo(10,datAlumEnt[idAlumBusq,2]+1) Hacer
 										// Para cada espacio dentro del ciclo
 										Para j<-1 Hasta cantCursosPorCiclo Hacer
 											// Recordar que datAlumEnt[idAlumBusq,1] es la carrera del alumno
-											Si (datCursCar[datAlumEnt[idAlumBusq,1],i,j,1] <> "" y datCursEnt[datAlumEnt[idAlumBusq,1],i,j,2]<datCursEnt[datAlumEnt[idAlumBusq,1],i,j,3]) y (contCursosMatric <= maxCursosPorAlum y verifMatricHor = 0) Entonces
+											Si datCursCar[datAlumEnt[idAlumBusq,1],i,j,1]<>"" y datCursEnt[datAlumEnt[idAlumBusq,1],i,j,2]<datCursEnt[datAlumEnt[idAlumBusq,1],i,j,3] y contCursosMatric<=maxCursosPorAlum y verifCruceHor=0 Entonces
 												// Si el nombre no está vacío, los cupos actuales son menores que los máximos, el numero de cursos matriculados es menor al límite, y no hay cruces, entonces 
-												// Imprimir curso
+												// Imprimir curso (Código: Nombre)
 												Escribir datCursCar[datAlumEnt[idAlumBusq,1],i,j,1],": ",datCursCar[datAlumEnt[idAlumBusq,1],i,j,2]
 												// Preguntar matrícula
 												Escribir "  ¿Matricularse en este curso?"
@@ -1046,13 +1046,14 @@ Algoritmo ProdAcred
 															// No trabajar con espacios vacíos
 															Si datCursHor[datAlumEnt[idAlumBusq,1],i,j,k,1] <> 0 Entonces
 																// Verificar si el espacio del horario del alumno está vacío
-																// Recordar que datAlumHor[id del estudiante, ciclo del curso, lugar en el ciclo del curso]
-																Si datAlumHor[idAlumBusq,datCursHor[datAlumEnt[idAlumBusq,1],i,j,k,1],datCursHor[datAlumEnt[idAlumBusq,1],i,j,k,2]] = FALSO Entonces
+																// datAlumHor[ id del estudiante, día del bloque, hora del bloque ]
+																// datCursHor[ carrera del curso, ciclo del curso, lugar en el ciclo del curso, bloque horario, (día y hora del bloque) ]
+																Si datAlumHor[idAlumBusq, datCursHor[datAlumEnt[idAlumBusq,1],i,j,k,1], datCursHor[datAlumEnt[idAlumBusq,1],i,j,k,2]] = FALSO Entonces
 																	// Espacio disponible, registrar hora en horario
-																	datAlumHor[idAlumBusq,datCursHor[datAlumEnt[idAlumBusq,1],i,j,k,1],datCursHor[datAlumEnt[idAlumBusq,1],i,j,k,2]] <- VERDADERO
+																	datAlumHor[idAlumBusq, datCursHor[datAlumEnt[idAlumBusq,1],i,j,k,1], datCursHor[datAlumEnt[idAlumBusq,1],i,j,k,2]] <- VERDADERO
 																SiNo
 																	// Espacio ocupado, detectar cruce para detener el bucle
-																	verifMatricHor <- 1
+																	verifCruceHor <- 1
 																FinSi
 															FinSi
 														FinPara
@@ -1072,7 +1073,7 @@ Algoritmo ProdAcred
 									
 									
 									// CONFIRMAR O ANULAR MATRÍCULA
-									Si verifMatricHor = 1 Entonces
+									Si verifCruceHor = 1 Entonces
 										Escribir "Se ha detectado un cruce de horarios. Matrícula cancelada."
 										// Reiniciar matriz de horarios del alumno
 										Para i <- 1 Hasta 6 Hacer
